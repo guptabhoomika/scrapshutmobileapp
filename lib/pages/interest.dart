@@ -138,10 +138,21 @@ class _InterestState extends State<Interest> {
         ListView(
           
           children: <Widget>[
-            Container(
+ 
+  Container(
+    
+            child: Text(
+                " KiRa dataset's powered by ScrapShut\n Opensource DataSet's for every aspiring technocrat \n The data you give = The data you get \n Submit your tags \ E.g: ML,AI,OpenCV,Marketing \n Based on your Interest\n visit \"Developers.scrapshut.com\" ",
+          textAlign: TextAlign.center,
+    
+        ),
+            padding: new EdgeInsets.all(30.0),
               height: 200,
               width: 200,
-            ),
+             
+),
+       
+     
             Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
