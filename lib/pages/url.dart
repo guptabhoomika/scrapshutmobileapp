@@ -59,7 +59,9 @@ _showSnackBar(int stauscode) {
   String url = 'https://backend.scrapshut.com/api/post/';
   // Map<String, String> headers = {"Authorization":"JWT $bvalue",
   //         "Content-Type":"application/json"};
-  Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
+//   Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
+// "Content-Type":"application/json"};
+ Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
 "Content-Type":"application/json"};
           print(headers);
   String json = jsonEncode({
@@ -75,8 +77,9 @@ _showSnackBar(int stauscode) {
 
   Response response = await post(url,headers: headers, body: json);
   print(response.body);
+  print(response.statusCode);
    int statusCode = response.statusCode;
-   if(statusCode == 200)
+   if(statusCode == 201)
    {
        print("statusCode");
      print(statusCode);
@@ -112,7 +115,23 @@ _showSnackBar(int stauscode) {
     _scaffoldKey.currentState.showSnackBar(snackBar);
 
    }
-  
+  else if(statusCode == 400)
+   {
+    
+   
+     final snackBar = new SnackBar(
+        content: Text(response.body.substring(response.body.indexOf(":")+2,response.body.length-2)),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
+          _review.clear();_tags.clear();_url.clear();ratings=0;
+              
+        }),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+   }
     
   }
 
@@ -288,7 +307,7 @@ _showSnackBar(int stauscode) {
                   _review.text.isEmpty ? _validateR = true : _validateR = false;
                   _tags.text.isEmpty ? _validateT = true : _validateT = false;
                 });
-                if(!_validateR&&_validateU&&_validateT)
+                if(!_validateR&&!_validateU&&!_validateT)
                 {
                    _makePostReq(_url.text, _tags.text.toString().split(",").toList(),ratings, _review.text);
                 }

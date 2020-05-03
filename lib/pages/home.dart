@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sssocial/pages/img.dart';
+import 'package:sssocial/pages/interest.dart';
 import 'package:sssocial/pages/url.dart';
 
 import 'msg.dart';
@@ -32,7 +33,7 @@ _HomeState createState() =>  _HomeState();
 // }
 
 class _HomeState extends State<Home>{
-bool isAuth =false;
+bool isAuth =true;
 String token ='';
 String value='';
 String gtoken='';
@@ -189,13 +190,15 @@ return Scaffold(
           // ...
         },
       ),
-      // ListTile(
-      //   title: Text('Item 2'),
-      //   onTap: () {
-      //     // Update the state of the app.
-      //     // ...
-      //   },
-      // ),
+      ListTile(
+        title: Text('Interests'),
+        onTap: () {
+           Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Interest()),
+  );
+        },
+      ),
     ],
   ),
                 ),
