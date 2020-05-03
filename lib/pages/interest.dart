@@ -13,6 +13,8 @@ class Interest extends StatefulWidget {
 
 class _InterestState extends State<Interest> {
    bool _validateU = false;
+   bool isUpdate = false;
+   
    TextEditingController _interest;
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
    @override
@@ -21,6 +23,46 @@ class _InterestState extends State<Interest> {
     _interest = TextEditingController();
     super.initState();
   }
+  _makePutRequest(List<String> tags) async {
+  // set up PUT request arguments
+  String url = 'https://backend.scrapshut.com/user/profile/';
+   Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
+"Content-Type":"application/json"};
+  String json = jsonEncode({
+			
+            "tags":tags
+});
+  print(json);
+
+  // make PUT request
+  Response response = await put(url, headers: headers, body: json);
+  // check the status code for the result
+  int statusCode = response.statusCode;
+  // this API passes back the updated item with the id added
+  print(statusCode);
+  if(statusCode==200)
+    {
+       final snackBar = new SnackBar(
+        content: Text("Succesful"),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
+          _interest.clear();
+          
+              
+        }),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+
+    }
+    setState(() {
+      isUpdate = false;
+    });
+  
+}
+
    _makePostReq(List<String> tags) async
   {
     String bvalue = await storage.read(key: 'btoken');
@@ -43,12 +85,14 @@ class _InterestState extends State<Interest> {
   print(response.body);
    int statusCode = response.statusCode;
    print(statusCode);
-    
-     final snackBar = new SnackBar(
-        content: Text(statusCode.toString()),
+    if(statusCode==200)
+    {
+       final snackBar = new SnackBar(
+        content: Text("Succesful"),
         duration: new Duration(seconds: 3),
         backgroundColor: Colors.black,
         action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
+          _interest.clear();
           
               
         }),
@@ -56,6 +100,29 @@ class _InterestState extends State<Interest> {
     //How to display Snackbar ?
     _scaffoldKey.currentState.showSnackBar(snackBar);
 
+
+    }
+    else if(statusCode==400)
+    {
+      setState(() {
+        isUpdate = true;
+      });
+      final snackBar = new SnackBar(
+        content: Text("Data Already Exists! Press Update"),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
+          
+          
+              
+        }),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+      
+        
+    }
+    
    
   
     
@@ -117,16 +184,20 @@ class _InterestState extends State<Interest> {
                 child: RaisedButton(
                   
                   color: Colors.blue,
-                  child: Text("Submit",style: TextStyle(color: Colors.white),),
+                  child: Text(isUpdate ? "Update" : "Submit",style: TextStyle(color: Colors.white),),
                   onPressed: ()  {
                      setState(() {
                    _interest.text.isEmpty ? _validateU = true : _validateU = false;
                   
                 });
-                if(!_validateU)
+                if(!_validateU&&!isUpdate)
                 {
                   _makePostReq(_interest.text.toString().split(",").toList());
                 }
+               
+                  _makePutRequest(_interest.text.toString().split(",").toList());
+
+                
                     
                   },
                 ),
