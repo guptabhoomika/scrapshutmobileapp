@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -21,8 +22,57 @@ class _InterestState extends State<Interest> {
   void initState() {
     // TODO: implement initState
     _interest = TextEditingController();
+    _makeGetRequest();
     super.initState();
   }
+  _makeGetRequest() async {
+  // make GET request
+  String url = 'https://backend.scrapshut.com/user/profile/';
+
+  Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
+"Content-Type":"application/json"};
+  Response response = await get(url,headers: headers);
+  // sample info available in response
+  int statusCode = response.statusCode;
+  print(statusCode);
+  if(statusCode==200)
+  {
+    String json = response.body;
+  print(json);
+  Map<String,dynamic> val =jsonDecode(response.body);
+  List<dynamic> results = val['results'];
+  print(results);
+  List<dynamic> _tags = results[0]["tags"];
+  if(_tags.isEmpty)
+  {
+    print("empty,post req");
+  }  
+  else
+  {
+    print("not empty,put req");
+    setState(() {
+      isUpdate = true;
+    });
+    // print(_tags);
+  }
+
+  
+
+  }
+  else
+  {
+    print("Error in getting response");
+  }
+ 
+
+  
+
+
+  
+ 
+
+  // TODO convert json to object...
+}
   _makePutRequest(List<String> tags) async {
   // set up PUT request arguments
   String url = 'https://backend.scrapshut.com/user/profile/';
@@ -57,9 +107,9 @@ class _InterestState extends State<Interest> {
 
 
     }
-    setState(() {
-      isUpdate = false;
-    });
+    // setState(() {
+    //   isUpdate = false;
+    // });
   
 }
 
@@ -85,7 +135,7 @@ class _InterestState extends State<Interest> {
   print(response.body);
    int statusCode = response.statusCode;
    print(statusCode);
-    if(statusCode==200)
+    if(statusCode==201)
     {
        final snackBar = new SnackBar(
         content: Text("Succesful"),
@@ -102,26 +152,7 @@ class _InterestState extends State<Interest> {
 
 
     }
-    else if(statusCode==400)
-    {
-      setState(() {
-        isUpdate = true;
-      });
-      final snackBar = new SnackBar(
-        content: Text("Data Already Exists! Press Update"),
-        duration: new Duration(seconds: 3),
-        backgroundColor: Colors.black,
-        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
-          
-          
-              
-        }),
-    );
-    //How to display Snackbar ?
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-      
-        
-    }
+   
     
    
   
@@ -194,8 +225,12 @@ class _InterestState extends State<Interest> {
                 {
                   _makePostReq(_interest.text.toString().split(",").toList());
                 }
+                if(!_validateU)
+                {
+                   _makePutRequest(_interest.text.toString().split(",").toList());
+                }
                
-                  _makePutRequest(_interest.text.toString().split(",").toList());
+                 
 
                 
                     
