@@ -75,10 +75,10 @@ class _InterestState extends State<Interest> {
     String bvalue = await storage.read(key: 'btoken');
 
   String url = 'https://backend.scrapshut.com/user/profile/';
-  // Map<String, String> headers = {"Authorization":"JWT $bvalue",
-  //         "Content-Type":"application/json"};
-  Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
-"Content-Type":"application/json"};
+  Map<String, String> headers = {"Authorization":"JWT $bvalue",
+          "Content-Type":"application/json"};
+//   Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
+// "Content-Type":"application/json"};
           print(headers);
   String json = jsonEncode({
 			
