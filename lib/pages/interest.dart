@@ -25,9 +25,10 @@ class _InterestState extends State<Interest> {
     _interest = TextEditingController();
     super.initState();
   }
-          String bvalue = await storage.read(key: 'btoken');
 
   _makePutRequest(List<String> tags) async {
+              String bvalue = await storage.read(key: 'btoken');
+
   // set up PUT request arguments
   String url = 'https://backend.scrapshut.com/user/profile/';
     Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
