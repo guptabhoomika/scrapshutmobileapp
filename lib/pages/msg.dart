@@ -68,9 +68,10 @@ _showSnackBar(int stauscode) {
   print(response.body);
    int statusCode = response.statusCode;
    print(statusCode);
-    if(statusCode == 201)
+    if(statusCode == 200)
    {
-      
+       print("statusCode");
+     print(statusCode);
      _showSnackBar(statusCode);
 
    }
@@ -103,25 +104,6 @@ _showSnackBar(int stauscode) {
     _scaffoldKey.currentState.showSnackBar(snackBar);
 
    }
-   else if(statusCode == 400)
-   {
-   
-   
-     final snackBar = new SnackBar(
-        content: Text(response.body.substring(response.body.indexOf(":")+2,response.body.length-2)),
-        duration: new Duration(seconds: 3),
-        backgroundColor: Colors.black,
-        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
-          _review.clear();_tags.clear(); _message.clear();ratings=0;
-              
-        }),
-    );
-    //How to display Snackbar ?
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-
-   }
-    
-  
   }
   // Widget build(BuildContext context) {
     Widget build(BuildContext context) {
@@ -294,11 +276,7 @@ _showSnackBar(int stauscode) {
                   _review.text.isEmpty ? _validateR = true : _validateR = false;
                   _tags.text.isEmpty ? _validateT = true : _validateT = false;
                 });
-                if(!_validateR&&_validateT&&_validateU)
-                {
-                  _makePostReq(_message.text, _tags.text.toString().split(",").toList(),ratings, _review.text);
-                }
-                    
+                    _makePostReq(_message.text, _tags.text.toString().split(",").toList(),ratings, _review.text);
                   },
                 ),
               )

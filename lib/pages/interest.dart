@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'home.dart';
+final storage = new FlutterSecureStorage();
 
 class Interest extends StatefulWidget {
   @override
@@ -23,11 +25,15 @@ class _InterestState extends State<Interest> {
     _interest = TextEditingController();
     super.initState();
   }
+          String bvalue = await storage.read(key: 'btoken');
+
   _makePutRequest(List<String> tags) async {
   // set up PUT request arguments
   String url = 'https://backend.scrapshut.com/user/profile/';
-   Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
+    Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
 "Content-Type":"application/json"};
+//    Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
+// "Content-Type":"application/json"};
   String json = jsonEncode({
 			
             "tags":tags
