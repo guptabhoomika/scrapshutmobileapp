@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+
 class Msg extends StatefulWidget {
   @override
   _MsgState createState() => _MsgState();
@@ -86,6 +87,7 @@ _showSnackBar(int stauscode) {
     );
     //How to display Snackbar ?
     _scaffoldKey.currentState.showSnackBar(snackBar);
+    //logout();
 
    }
      else if(statusCode == 500)

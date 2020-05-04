@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import  '../pages/home.dart';
 
 class URL extends StatefulWidget {
@@ -59,10 +60,9 @@ _showSnackBar(int stauscode) {
   String url = 'https://backend.scrapshut.com/api/post/';
   // Map<String, String> headers = {"Authorization":"JWT $bvalue",
   //         "Content-Type":"application/json"};
-//   Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
-// "Content-Type":"application/json"};
- Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
+  Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
 "Content-Type":"application/json"};
+
           print(headers);
   String json = jsonEncode({
 			"rate": rating,
@@ -98,6 +98,7 @@ _showSnackBar(int stauscode) {
     );
     //How to display Snackbar ?
     _scaffoldKey.currentState.showSnackBar(snackBar);
+    //logout();
 
    }
      else if(statusCode == 500)

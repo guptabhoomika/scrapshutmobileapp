@@ -1,21 +1,26 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import '../pages/home.dart';
+import 'package:sssocial/screens/scree.dart';
 
-import 'home.dart';
 
-class Interest extends StatefulWidget {
+
+class InterestA extends StatefulWidget {
   @override
-  _InterestState createState() => _InterestState();
+  _InterestAState createState() => _InterestAState();
 }
 
-class _InterestState extends State<Interest> {
-   bool _validateU = false;
+class _InterestAState extends State<InterestA> {
+ bool _validateU = false;
    bool isUpdate = false;
-   
+
    TextEditingController _interest;
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
    @override
@@ -26,11 +31,10 @@ class _InterestState extends State<Interest> {
     super.initState();
   }
   _makeGetRequest() async {
-     String bvalue = await storage.read(key: 'btoken');
-
+    String bvalue = await storage.read(key: 'btoken');
   // make GET request
   String url = 'https://backend.scrapshut.com/user/profile/';
-  Map<String, String> headers = {"Authorization":"JWT $bvalue",
+   Map<String, String> headers = {"Authorization":"JWT $bvalue",
           "Content-Type":"application/json"};
 
 //   Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
@@ -78,12 +82,11 @@ class _InterestState extends State<Interest> {
   // TODO convert json to object...
 }
   _makePutRequest(List<String> tags) async {
-     String bvalue = await storage.read(key: 'btoken');
-
+    String bvalue = await storage.read(key: 'btoken');
   // set up PUT request arguments
-  Map<String, String> headers = {"Authorization":"JWT $bvalue",
-          "Content-Type":"application/json"};
   String url = 'https://backend.scrapshut.com/user/profile/';
+    Map<String, String> headers = {"Authorization":"JWT $bvalue",
+          "Content-Type":"application/json"};
 //    Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
 // "Content-Type":"application/json"};
   String json = jsonEncode({
@@ -98,6 +101,7 @@ class _InterestState extends State<Interest> {
   int statusCode = response.statusCode;
   // this API passes back the updated item with the id added
   print(statusCode);
+  
   if(statusCode==200)
     {
        final snackBar = new SnackBar(
@@ -112,12 +116,15 @@ class _InterestState extends State<Interest> {
     );
     //How to display Snackbar ?
     _scaffoldKey.currentState.showSnackBar(snackBar);
+    
+    
 
 
     }
     // setState(() {
     //   isUpdate = false;
     // });
+   
   
 }
 
@@ -163,8 +170,7 @@ class _InterestState extends State<Interest> {
    
     
    
-  
-    
+   
   }
 
 
@@ -237,12 +243,51 @@ class _InterestState extends State<Interest> {
                 {
                    _makePutRequest(_interest.text.toString().split(",").toList());
                 }
+                
+                
+                  
+            Timer(Duration(seconds: 3), () {
+             
+                    
+        Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Auth()),
+  );
+  print("Yeah, this line is printed after 3 seconds");
+});
+           
+                
+                   
+   
                
                  
 
                 
                     
                   },
+                ),
+              ),
+              SizedBox(height: 200,),
+              
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: GestureDetector(
+                  onTap: (){
+                     Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Auth()),
+  );
+                    print("Tap");},
+                                  child: Container(
+                   
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      
+                      children: <Widget>[
+                        Text("SKIP",style: TextStyle(fontSize: 20,color: Colors.blue),),
+                        Icon(Icons.arrow_forward_ios,color: Colors.blue)
+                      ],
+                    )),
                 ),
               )
           ],
