@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:http/http.dart' as http;
@@ -6,33 +5,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import  '../pages/home.dart';
 
-class Msg extends StatefulWidget {
+class URL extends StatefulWidget {
   @override
-  _MsgState createState() => _MsgState();
+  _URLState createState() => _URLState();
 }
 final storage = new FlutterSecureStorage();
 
-class _MsgState extends State<Msg> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  TextEditingController _message;
+class _URLState extends State<URL> {
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  TextEditingController _url;
   TextEditingController _review;
   TextEditingController _tags;
   int ratings;
-   bool _validateU = false;
+  bool _validateU = false;
    bool _validateR = false;
     bool _validateT = false;
   
+
+ Home _home;
   @override
-void initState() {
-    _message = TextEditingController();
+  void initState() {
+    _url = TextEditingController();
     _review = TextEditingController();
     _tags = TextEditingController();
+    _home = Home();
+
   
     // TODO: implement initState
     super.initState();
-  }  
+  }
   
+  
+
 _showSnackBar(int stauscode) {
     print("Show Snackbar here !");
     final snackBar = new SnackBar(
@@ -40,25 +46,30 @@ _showSnackBar(int stauscode) {
         duration: new Duration(seconds: 3),
         backgroundColor: Colors.black,
         action: new SnackBarAction(label: stauscode == 201 ? 'Ok' : "Try Again",textColor: Colors.white, onPressed: (){
-         _review.clear();_tags.clear();;ratings=0;
+         _review.clear();_tags.clear();_url.clear();ratings=0;
         }),
     );
     //How to display Snackbar ?
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
-  _makePostReq(String content,List<String> tags,int rating,String review) async
+  _makePostReq(String urlC,List<String> tags,int rating,String review) async
   {
-        String bvalue = await storage.read(key: 'btoken');
+    String bvalue = await storage.read(key: 'btoken');
 
-  String url = 'https://backend.scrapshut.com/api/msg/';
+  String url = 'https://backend.scrapshut.com/api/post/';
+  // Map<String, String> headers = {"Authorization":"JWT $bvalue",
+  //         "Content-Type":"application/json"};
   Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
 "Content-Type":"application/json"};
+//  Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
+// "Content-Type":"application/json"};
+          print(headers);
   String json = jsonEncode({
 			"rate": rating,
-            "content": content,
+            "content": "content",
             "review": review,
-            // "url": urlC,
-            // "tags":tags
+            "url": urlC,
+            "tags":tags
 });
   print(json);
 
@@ -66,9 +77,9 @@ _showSnackBar(int stauscode) {
 
   Response response = await post(url,headers: headers, body: json);
   print(response.body);
+  print(response.statusCode);
    int statusCode = response.statusCode;
-   print(statusCode);
-    if(statusCode == 200)
+   if(statusCode == 201)
    {
        print("statusCode");
      print(statusCode);
@@ -96,7 +107,7 @@ _showSnackBar(int stauscode) {
         duration: new Duration(seconds: 3),
         backgroundColor: Colors.black,
         action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
-          _review.clear();_tags.clear(); _message.clear() ;ratings=0;
+          _review.clear();_tags.clear();_url.clear();ratings=0;
               
         }),
     );
@@ -104,9 +115,28 @@ _showSnackBar(int stauscode) {
     _scaffoldKey.currentState.showSnackBar(snackBar);
 
    }
+  else if(statusCode == 400)
+   {
+    
+   
+     final snackBar = new SnackBar(
+        content: Text(response.body.substring(response.body.indexOf(":")+2,response.body.length-2)),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
+          _review.clear();_tags.clear();_url.clear();ratings=0;
+              
+        }),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+   }
+    
   }
-  // Widget build(BuildContext context) {
-    Widget build(BuildContext context) {
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       body: ListView(
@@ -118,36 +148,36 @@ _showSnackBar(int stauscode) {
               Container(
                 height: 220,
                 width: 150,
-                    decoration: new BoxDecoration(
+                 decoration: new BoxDecoration(
         image: DecorationImage(
           image: new AssetImage(
               'assets/images/scrap_withoutbg.png'),
           fit: BoxFit.fill,
         ),
         shape: BoxShape.rectangle,
-      ), 
+      ),
                
               ),
-              // Text("The More data you give = the more data you get",style: TextStyle(color: Colors.red),),
-              // Text("developers.scrapshut.com",style: TextStyle(color: Colors.red)),
-              // SizedBox(height: 10,),
+              Text("The More data you give = the more data you get",style: TextStyle(color: Colors.red),),
+              Text("developers.scrapshut.com",style: TextStyle(color: Colors.red)),
+              SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text("Message:*",style: TextStyle(color: Colors.grey)),
+                  Text("URL*",style: TextStyle(color: Colors.grey)),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       height: 45,
                       width: 250,
-                      child: TextField(
-                        
-                        controller: _message,
+                      child: TextFormField(
+                        keyboardType: TextInputType.url,
+                        controller: _url,
                         textAlign: TextAlign.center,
                               decoration: InputDecoration(
                             
-                                hintText: 'Message',
-                                 errorText: _validateU ? 'Value Can\'t Be Empty' : null,
+                                hintText: 'URL',
+                                errorText: _validateU ? 'Value Can\'t Be Empty' : null,
 
                                 hintStyle: TextStyle(color: Colors.grey,),
                                 focusedBorder: OutlineInputBorder(
@@ -174,6 +204,7 @@ _showSnackBar(int stauscode) {
                    Padding(
                      padding: const EdgeInsets.all(8.0),
                      child: RatingBar(
+                    
    initialRating: 0,
    minRating: 1,
    direction: Axis.horizontal,
@@ -208,7 +239,7 @@ _showSnackBar(int stauscode) {
                               decoration: InputDecoration(
                               
                                 hintText: "Review helps others identify false comments",
-                                 errorText: _validateR ? 'Value Can\'t Be Empty' : null,
+                                errorText: _validateR ? 'Value Can\'t Be Empty' : null,
 
                                 hintStyle: TextStyle(color: Colors.grey,fontSize: 10),
                                 focusedBorder: OutlineInputBorder(
@@ -243,7 +274,7 @@ _showSnackBar(int stauscode) {
                               decoration: InputDecoration(
                               
                                 hintText: 'Use , to seperate tags ',
-                                 errorText: _validateT ? 'Value Can\'t Be Empty' : null,
+                                errorText: _validateT ? 'Value Can\'t Be Empty' : null,
 
                                 hintStyle: TextStyle(color: Colors.grey,),
                                 focusedBorder: OutlineInputBorder(
@@ -271,12 +302,18 @@ _showSnackBar(int stauscode) {
                   color: Colors.blue,
                   child: Text("Submit",style: TextStyle(color: Colors.white),),
                   onPressed: ()  {
-                     setState(() {
-                  _message.text.isEmpty ? _validateU = true : _validateU = false;
+                    setState(() {
+                  _url.text.isEmpty ? _validateU = true : _validateU = false;
                   _review.text.isEmpty ? _validateR = true : _validateR = false;
                   _tags.text.isEmpty ? _validateT = true : _validateT = false;
                 });
-                    _makePostReq(_message.text, _tags.text.toString().split(",").toList(),ratings, _review.text);
+                if(!_validateR&&!_validateU&&!_validateT)
+                {
+                   _makePostReq(_url.text, _tags.text.toString().split(",").toList(),ratings, _review.text);
+                }
+              
+              
+                   
                   },
                 ),
               )

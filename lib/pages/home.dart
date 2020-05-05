@@ -14,7 +14,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sssocial/pages/img.dart';
 import 'package:sssocial/pages/interest.dart';
-import 'package:sssocial/pages/interestafterSignIn.dart';
+import 'package:sssocial/pages/interestAfterSignIn.dart';
 import 'package:sssocial/pages/url.dart';
 
 import 'msg.dart';
@@ -25,7 +25,9 @@ String auth="https://backend.scrapshut.com/a/google/";
 
 
 final googlesignin= GoogleSignIn();
-class Home extends StatefulWidget{
+class Home extends StatefulWidget{ 
+  bool toggle = false;
+  Home({this.toggle});
 @override
 _HomeState createState() =>  _HomeState();
 }
@@ -34,6 +36,7 @@ _HomeState createState() =>  _HomeState();
 // }
 
 class _HomeState extends State<Home>{
+ 
 bool isAuth =false;
 String token ='';
 String value='';
@@ -46,7 +49,7 @@ if (account != null){
   print("user signed in ");
   setState(() {
     
-    isAuth=true;
+   
   });
 }
 else{
@@ -119,110 +122,113 @@ else{
 
     
 }
-// Scaffold buildAuthScreen(){
-// return Scaffold(
-//   body: Container(
-//     height: MediaQuery.of(context).size.height,
-//     width: double.infinity,
-//     child: DefaultTabController(
-//       child: Scaffold(
-//          appBar: AppBar(
-//                   elevation: 0.0,
-//                   backgroundColor: Colors.blue[100],
-//                   bottom: PreferredSize(
-//                     preferredSize: Size.fromHeight(25),
-//                     child: Container(
-//                       color: Colors.transparent,
-//                       child: SafeArea(
-//                         child: Column(
-//                           children: <Widget>[
-//                             TabBar(
-//                                 indicator: UnderlineTabIndicator(
-//                                     borderSide: BorderSide(
-//                                         color: Colors.red
-//                                         , width: 6.0),
-//                                     insets: EdgeInsets.fromLTRB(
-//                                         40.0, 20.0, 40.0, 0)),
-//                                 indicatorWeight: 15,
-//                                 indicatorSize: TabBarIndicatorSize.label,
-//                                 labelColor: Colors.white,
-//                                 labelStyle: TextStyle(
-//                                     fontSize: 12,
+
+
+ Scaffold buildAuthScreen(){
+return Scaffold(
+
+  body: Container(
+    height: MediaQuery.of(context).size.height,
+    width: double.infinity,
+    child: DefaultTabController(
+      child: Scaffold(
+         appBar: AppBar(
+                  elevation: 0.0,
+                  backgroundColor: Colors.blue[100],
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(25),
+                    child: Container(
+                      color: Colors.transparent,
+                      child: SafeArea(
+                        child: Column(
+                          children: <Widget>[
+                            TabBar(
+                                indicator: UnderlineTabIndicator(
+                                    borderSide: BorderSide(
+                                        color: Colors.red
+                                        , width: 6.0),
+                                    insets: EdgeInsets.fromLTRB(
+                                        40.0, 20.0, 40.0, 0)),
+                                indicatorWeight: 15,
+                                indicatorSize: TabBarIndicatorSize.label,
+                                labelColor: Colors.white,
+                                labelStyle: TextStyle(
+                                    fontSize: 12,
                                    
-//                                     fontWeight: FontWeight.bold),
-//                                 unselectedLabelColor: Colors.white,
-//                                 tabs: [
-//                                   Tab(
-//                                     text: "URL",
+                                    fontWeight: FontWeight.bold),
+                                unselectedLabelColor: Colors.white,
+                                tabs: [
+                                  Tab(
+                                    text: "URL",
                                     
-//                                   ),
-//                                   Tab(
-//                                     text: "MESSAGE",
+                                  ),
+                                  Tab(
+                                    text: "MESSAGE",
                                    
-//                                   ),
-//                                   Tab(
-//                                     text: "IMAGE",
+                                  ),
+                                  Tab(
+                                    text: "IMAGE",
                                   
-//                                   ),
-//                                 ])
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   ),
+                                  ),
+                                ])
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   
-//                 ),
-//                 drawer: Drawer(
-//                  child: ListView(
-//     // Important: Remove any padding from the ListView.
-//     padding: EdgeInsets.zero,
-//     children: <Widget>[
-//       DrawerHeader(
-//         child: Text('Scrashut For Deeptech'),
-//         decoration: BoxDecoration(
-//           color: Colors.blue,
-//         ),
-//       ),
-//       ListTile(
-//         title: Text('Logout'),
-//         onTap: () {
-//           logout();
-//           // Update the state of the app.
-//           // ...
-//         },
-//       ),
-//       ListTile(
-//         title: Text('Interests'),
-//         onTap: () {
-//            Navigator.push(
-//     context,
-//     MaterialPageRoute(builder: (context) => Interest()),
-//   );
-//         },
-//       ),
-//     ],
-//   ),
-//                 ),
-//                   body: TabBarView(
-//                   children: <Widget>[
-//                     URL(),
-//                     Msg(),  
-//                     Img(),
+                ),
+                drawer: Drawer(
+                 child: ListView(
+    // Important: Remove any padding from the ListView.
+    padding: EdgeInsets.zero,
+    children: <Widget>[
+      DrawerHeader(
+        child: Text('Scrashut For Deeptech'),
+        decoration: BoxDecoration(
+          color: Colors.blue,
+        ),
+      ),
+      ListTile(
+        title: Text('Logout'),
+        onTap: () {
+          logout();
+          // Update the state of the app.
+          // ...
+        },
+      ),
+      ListTile(
+        title: Text('Interests'),
+        onTap: () {
+           Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Interest()),
+  );
+        },
+      ),
+    ],
+  ),
+                ),
+                  body: TabBarView(
+                  children: <Widget>[
+                    URL(),
+                    Msg(),  
+                    Img(),
                     
-//                   ],
-//                 )
-//                 ), 
-//                 length: 3,
-//                 )
-//                 )
+                  ],
+                )
+                ), 
+                length: 3,
+                )
+                )
                 
-//       );
+      );
       
       
   
   
 
-// }
+}
  Scaffold buildUnAuthScreen(){
  return Scaffold(
 body: Container(
@@ -281,7 +287,8 @@ alignment: Alignment.center,
 @override
 
   Widget  build(BuildContext context){
-    // return Text("home");
-    return isAuth ? InterestA(): buildUnAuthScreen();
+
+    return isAuth ? InterestA() : buildUnAuthScreen();
+  
   }
 }

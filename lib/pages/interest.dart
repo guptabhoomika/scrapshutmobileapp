@@ -1,25 +1,20 @@
-import 'dart:async';
-
-
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import '../pages/home.dart';
-import 'package:sssocial/screens/scree.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'home.dart';
+final storage = new FlutterSecureStorage();
 
-
-class InterestA extends StatefulWidget {
+class Interest extends StatefulWidget {
   @override
-  _InterestAState createState() => _InterestAState();
+  _InterestState createState() => _InterestState();
 }
 
-class _InterestAState extends State<InterestA> {
- bool _validateU = false;
+class _InterestState extends State<Interest> {
+  bool _validateU = false;
    bool isUpdate = false;
    List<dynamic> _tags;
    bool isSuccess = false;
@@ -321,29 +316,7 @@ class _InterestAState extends State<InterestA> {
                   },
                 ),
               ),
-              SizedBox(height: 200,),
               
-              Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext cntext)=>Auth()));
-
-                   
-                    
-                    print("Tap");},
-                                  child: Container(
-                   
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      
-                      children: <Widget>[
-                        Text( isSuccess ? "CONTINUE" :"SKIP",style: TextStyle(fontSize: 20,color: Colors.blue),),
-                        Icon(Icons.arrow_forward_ios,color: Colors.blue)
-                      ],
-                    )),
-                ),
-              )
           ],
         ),
       
