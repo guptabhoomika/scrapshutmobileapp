@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:sssocial/pages/home.dart';
+import 'package:sssocial/pages/img.dart';
 import 'package:sssocial/pages/interest.dart';
-
-import '../pages/img.dart';
-import '../pages/url.dart';
-import '../pages/msg.dart';
-class Auth extends StatefulWidget {
+import 'package:sssocial/pages/msg.dart';
+import 'package:sssocial/pages/url.dart';
+import 'package:sssocial/screens/services.dart';
+class Main extends StatefulWidget {
+  //bool isAuth;
   @override
-  _AuthState createState() => _AuthState();
+  _MainState createState() => _MainState();
 }
 
-class _AuthState extends State<Auth> {
+class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    
+return Scaffold(
+
   body: Container(
     height: MediaQuery.of(context).size.height,
     width: double.infinity,
@@ -78,7 +82,13 @@ class _AuthState extends State<Auth> {
       ListTile(
         title: Text('Logout'),
         onTap: () {
-          //logout();
+          print("Trying to logout");
+          print("Unauth screen should be built");
+          logout();
+         
+          
+         
+        
           // Update the state of the app.
           // ...
         },
@@ -92,6 +102,9 @@ class _AuthState extends State<Auth> {
   );
         },
       ),
+      ListTile(
+        title: Text("Inside home"),
+      )
     ],
   ),
                 ),
@@ -110,5 +123,9 @@ class _AuthState extends State<Auth> {
                 
       );
       
+      
+  
+  
+
   }
 }

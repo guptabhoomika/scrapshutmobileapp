@@ -327,7 +327,7 @@ class _InterestAState extends State<InterestA> {
                 padding: const EdgeInsets.only(right: 10),
                 child: GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext cntext)=>Auth()));
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) =>Main()));
 
                    
                     
