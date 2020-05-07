@@ -49,7 +49,7 @@ if (account != null){
   print("user signed in ");
   setState(() {
     
-   
+   isAuth=true;
   });
 }
 else{
@@ -64,7 +64,7 @@ else{
 googlesignin.signInSilently(suppressErrors:false)
 .then((account){
   if (account != null){
-  print("user signed in with mounikesh");
+  print("user signed ");
   setState(() {
     
     isAuth=true;
