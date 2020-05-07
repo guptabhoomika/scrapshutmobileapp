@@ -23,7 +23,7 @@ class _InterestAState extends State<InterestA> {
    bool isUpdate = false;
    List<dynamic> _tags;
    bool isSuccess = false;
-   Home _home;
+  
 
 
    TextEditingController _interest;
@@ -33,7 +33,7 @@ class _InterestAState extends State<InterestA> {
     // TODO: implement initState
     _tags = new List<dynamic>();
     _interest = TextEditingController();
-    _home = Home();
+    
     _makeGetRequest();
     super.initState();
   }
@@ -327,11 +327,9 @@ class _InterestAState extends State<InterestA> {
                 padding: const EdgeInsets.only(right: 10),
                 child: GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) =>Main()));
-
-                   
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Main()));
+                  },              
                     
-                    print("Tap");},
                                   child: Container(
                    
                     child: Row(

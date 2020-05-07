@@ -1,3 +1,6 @@
+
+
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:http/http.dart' as http;
@@ -26,10 +29,16 @@ String auth="https://backend.scrapshut.com/a/google/";
 
 final googlesignin= GoogleSignIn();
 class Home extends StatefulWidget{ 
-  bool toggle = false;
-  Home({this.toggle});
-@override
+ 
+
+
+  method() => createState().logout();
+  @override
 _HomeState createState() =>  _HomeState();
+  
+  
+
+ 
 }
 
 // class _HomeState {
@@ -113,22 +122,25 @@ else{
           });
   });
 }
-//  logout(){
-//     googlesignin.signOut();
+ logout(){
+    googlesignin.signOut();
 
-//    storage.delete(key: 'btoken');
-//    storage.delete(key: 'token');
-
-
+   storage.delete(key: 'btoken');
+   storage.delete(key: 'token');
+   
+     //isAuth = false;
+   
+print("isauth after logout");
+print(isAuth);
     
-// }
+}
 
 
-//  Scaffold buildAuthScreen(){
-// return Scaffold(
+//   Scaffold buildAuthScreen(){
+// return      Scaffold(
 
 //   body: Container(
-//     height: MediaQuery.of(context).size.height,
+//     height: double.maxFinite,
 //     width: double.infinity,
 //     child: DefaultTabController(
 //       child: Scaffold(
@@ -287,6 +299,8 @@ alignment: Alignment.center,
 @override
 
   Widget  build(BuildContext context){
+    print("is auth in build");
+    print(isAuth);
 
     return isAuth ? InterestA() : buildUnAuthScreen();
   

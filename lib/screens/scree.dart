@@ -4,7 +4,6 @@ import 'package:sssocial/pages/img.dart';
 import 'package:sssocial/pages/interest.dart';
 import 'package:sssocial/pages/msg.dart';
 import 'package:sssocial/pages/url.dart';
-import 'package:sssocial/screens/services.dart';
 class Main extends StatefulWidget {
   //bool isAuth;
   @override
@@ -84,7 +83,7 @@ return Scaffold(
         onTap: () {
           print("Trying to logout");
           print("Unauth screen should be built");
-          logout();
+          Home().method();
          
           
          
@@ -103,7 +102,7 @@ return Scaffold(
         },
       ),
       ListTile(
-        title: Text("Inside home"),
+        title: Text("Inside Screen"),
       )
     ],
   ),
