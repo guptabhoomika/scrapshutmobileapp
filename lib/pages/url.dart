@@ -158,8 +158,8 @@ _showSnackBar(int stauscode) {
       ),
                
               ),
-              Text("The More data you give = the more data you get",style: TextStyle(color: Colors.red),),
-              Text("developers.scrapshut.com",style: TextStyle(color: Colors.red)),
+              // Text("The More data you give = the more data you get",style: TextStyle(color: Colors.red),),
+              // Text("developers.scrapshut.com",style: TextStyle(color: Colors.red)),
               SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

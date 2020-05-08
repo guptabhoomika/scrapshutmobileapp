@@ -209,15 +209,29 @@ class _InterestAState extends State<InterestA> {
             Container(
               height: 100,
               width: 100,
-              
+                margin: const EdgeInsets.only(left: 50.0, right: 50.0,top: 10.0),
+
+                      decoration: new BoxDecoration(
+        image: DecorationImage(
+          image: new AssetImage(
+              'assets/images/kira.png'),
+          fit: BoxFit.fill,
+        ),
+        shape: BoxShape.rectangle,
+        
+      ),
+          
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 50,left: 80,right: 20),
+              padding: const EdgeInsets.only(top: 50,left: 50,right: 50),
               child: Container(
                 //color: Colors.red,
-                height: 50,
-                width: 200,
-                child: _tags.isEmpty ? Text("Getting your data") : 
+                height: 300,
+                width: 300,
+                
+                // child: _tags.isEmpty ? Text("KiRa OpenSource dataset's powered by ScrapShut\n Opensource DataSet's for every aspiring technocrat \n Project Kira gives you database access of scrapshut  For Free  \n If want this dataset's  for your organization then please add your tags in  Intrests Section  \n If you want to contribute/support this  opensource initiative you can power it up by posting content\n where your data will be seggregated based on the tags and will be used for creating future tech  " ,          textAlign: TextAlign.center,): 
+
+                child: _tags.isEmpty ? Text("KiRa OpenSource dataset's powered by ScrapShut\n Opensource DataSet's for NextGenTech \n Project Kira gives you database access of scrapshut  For Free  \n \"\ Visit:Developers.scrapshut.com \"\ \n For more Info  " ,          textAlign: TextAlign.center,): 
                 ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,

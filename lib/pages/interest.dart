@@ -202,11 +202,11 @@ class _InterestState extends State<Interest> {
              Container(
     
             child: Text(
-                " KiRa dataset's powered by ScrapShut\n Opensource DataSet's for every aspiring technocrat \n The data you give = The data you get \n Submit your tags \ E.g: ML,AI,OpenCV,Marketing \n Based on your Interest\n visit \"Developers.scrapshut.com\" ",
+                "For Organiation's or student's who wants to use opensource  dataset's \n  please update your tags \n Visit: \"Developers.scrapshut.com\"\n For more INFO ",
           textAlign: TextAlign.center,
     
         ),
-            padding: new EdgeInsets.all(30.0),
+            padding: new EdgeInsets.all(50.0),
               height: 200,
               width: 200,
              

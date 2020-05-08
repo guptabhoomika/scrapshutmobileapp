@@ -288,3 +288,16 @@ _showSnackBar(int stauscode) {
     );
   }
 }
+
+
+
+  // margin: const EdgeInsets.only(left: 50.0, right: 20.0),
+
+  //                     decoration: new BoxDecoration(
+  //       image: DecorationImage(
+  //         image: new AssetImage(
+  //             'assets/images/kira.png'),
+  //         fit: BoxFit.fill,
+  //       ),
+  //       shape: BoxShape.rectangle,
+  //     ),
