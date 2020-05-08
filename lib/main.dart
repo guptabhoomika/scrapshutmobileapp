@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+
 import 'package:sssocial/pages/home.dart';
 
 
@@ -33,6 +34,8 @@ class _State extends State<Myapp>{
       title:'Scrapshut',
       debugShowCheckedModeBanner: false,
       home: Home(),
+      
+ 
     );
   }
 }

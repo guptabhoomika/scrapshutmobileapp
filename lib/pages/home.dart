@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:http/http.dart' as http;
 import 'package:http/http.dart' as http;
@@ -20,6 +21,7 @@ import 'package:sssocial/pages/interest.dart';
 import 'package:sssocial/pages/interestAfterSignIn.dart';
 import 'package:sssocial/pages/url.dart';
 
+
 import 'msg.dart';
 
 final storage = new FlutterSecureStorage();
@@ -31,8 +33,11 @@ final googlesignin= GoogleSignIn();
 class Home extends StatefulWidget{ 
  
 
-
   method() => createState().logout();
+  // buildAuth(context) => createState().buildAuthScreen(context);
+  
+  login() => createState().login();
+
   @override
 _HomeState createState() =>  _HomeState();
   
@@ -115,6 +120,10 @@ else{
       String bvalue = await storage.read(key: 'btoken');
       print(bvalue);
       print("sucess");
+      
+      
+     
+      
     }
    else{
      print("not success");
@@ -132,15 +141,21 @@ else{
    
 print("isauth after logout");
 print(isAuth);
+Timer(Duration(seconds: 3), () {
+  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  print("Yeah, this line is printed after 3 seconds");
+});
+
+print("2");
     
 }
 
 
-//   Scaffold buildAuthScreen(){
+//   Scaffold buildAuthScreen(context){
 // return      Scaffold(
 
 //   body: Container(
-//     height: double.maxFinite,
+//     height: MediaQuery.of(context).size.height,
 //     width: double.infinity,
 //     child: DefaultTabController(
 //       child: Scaffold(

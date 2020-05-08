@@ -84,6 +84,8 @@ return Scaffold(
           print("Trying to logout");
           print("Unauth screen should be built");
           Home().method();
+
+         
          
           
          

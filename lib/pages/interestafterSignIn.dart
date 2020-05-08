@@ -193,12 +193,14 @@ class _InterestAState extends State<InterestA> {
    
    
   }
+  
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+    
       appBar: AppBar(),
       body: 
         ListView(
@@ -327,7 +329,9 @@ class _InterestAState extends State<InterestA> {
                 padding: const EdgeInsets.only(right: 10),
                 child: GestureDetector(
                   onTap: (){
+                    //Home().buildAuth(context);
                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Main()));
+                    print("tap");
                   },              
                     
                                   child: Container(
