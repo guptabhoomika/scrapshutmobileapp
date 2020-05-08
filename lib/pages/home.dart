@@ -132,7 +132,7 @@ else{
           });
   });
 }
- logout(){
+ logout() async{
     googlesignin.signOut();
 
    storage.delete(key: 'btoken');
@@ -294,10 +294,10 @@ alignment: Alignment.center,
     //    color:Colors.lightBlue,
     //    ),
     //    ),
-       GestureDetector(
-         onTap: login(),
+       RaisedButton(         
+         onPressed: login(),
          child: Container(
-           width:350.0,
+           width:450.0,
            height:60.0,
            decoration:BoxDecoration(
              image:DecorationImage(image: AssetImage('assets/images/download.png'),
