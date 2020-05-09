@@ -1,6 +1,7 @@
 
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -70,7 +71,7 @@ if (account != null){
 else{
   setState(() {
     
-    isAuth=false;
+    //isAuth=false;
   });
 }
 },onError:(err){
@@ -88,7 +89,7 @@ googlesignin.signInSilently(suppressErrors:false)
 else{
   setState(() {
     
-    isAuth=false;
+    //isAuth=false;
   });
 }
 });
@@ -132,18 +133,21 @@ else{
           });
   });
 }
- logout() async{
-    googlesignin.signOut();
+ Future<void> logout() async {
+   //await googlesignin.disconnect();
+    await googlesignin.signOut();
+   
 
    storage.delete(key: 'btoken');
    storage.delete(key: 'token');
+   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
    
      //isAuth = false;
    
 print("isauth after logout");
 print(isAuth);
 Timer(Duration(seconds: 3), () {
-  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  
   print("Yeah, this line is printed after 3 seconds");
 });
 

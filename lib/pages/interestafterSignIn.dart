@@ -222,109 +222,51 @@ class _InterestAState extends State<InterestA> {
       ),
           
             ),
+            Container(
+              child: Text("KiRa OpenSource dataset's powered by ScrapShut\n Opensource DataSet's for NextGenTech \n Project Kira gives you database access of scrapshut  For Free  \n \"\ Visit:Developers.scrapshut.com \"\ \n For more Info  " ,          textAlign: TextAlign.center),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 50,left: 50,right: 50),
               child: Container(
                 //color: Colors.red,
-                height: 300,
-                width: 300,
+               height: 50,
+               width: double.infinity,
                 
                 // child: _tags.isEmpty ? Text("KiRa OpenSource dataset's powered by ScrapShut\n Opensource DataSet's for every aspiring technocrat \n Project Kira gives you database access of scrapshut  For Free  \n If want this dataset's  for your organization then please add your tags in  Intrests Section  \n If you want to contribute/support this  opensource initiative you can power it up by posting content\n where your data will be seggregated based on the tags and will be used for creating future tech  " ,          textAlign: TextAlign.center,): 
 
-                child: _tags.isEmpty ? Text("KiRa OpenSource dataset's powered by ScrapShut\n Opensource DataSet's for NextGenTech \n Project Kira gives you database access of scrapshut  For Free  \n \"\ Visit:Developers.scrapshut.com \"\ \n For more Info  " ,          textAlign: TextAlign.center,): 
+                child: _tags.isEmpty ? Center(child: Text("Getting your data")) : 
                 ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
+                  //shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: _tags.length,
                   itemBuilder: (context,index){
-                    return Container(
+             
+                                          return Container(
+                  
                       height: 3,
-                      
-                      margin: EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: (BorderRadius.circular(40)),
-                        color: index%2==0 ? Colors.orangeAccent : Colors.greenAccent,
-                        
+                        margin: EdgeInsets.only(right: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: (BorderRadius.circular(40)),
+                          color: index%2==0 ? Colors.orangeAccent : Colors.greenAccent,
+                          
       
-                      ),
-                      
-                        
-                        
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Text(_tags[index].toString().toUpperCase(),textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w800,),),
                         ),
-                      );
+                        
+                          
+                          
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Text(_tags[index].toString().toUpperCase(),textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w800,),),
+                          ),
+                        );
+                    
                   } ),
               ),
             ),
-            SizedBox(height: 20,),
-            Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text("Interest",style: TextStyle(color: Colors.grey)),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 45,
-                          width: 250,
-                          child: TextField(
-                            
-                            controller: _interest,
-                            textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
-                                
-                                    hintText: 'Use , to separate',
-                                     errorText: _validateU ? 'Value Can\'t Be Empty' : null,
-
-                                    hintStyle: TextStyle(color: Colors.grey,),
-                                    focusedBorder: OutlineInputBorder(
-                    
-                        borderSide: BorderSide(color: Colors.blue),
-
-                    ),
-                     enabledBorder: OutlineInputBorder(
-                     
-                        borderSide: BorderSide(color: Colors.blue),
-                     ),
-  ),
-),
-                        ),
-                      )
-                      
-                    ],
-                  ),
-                  Container(
-                height: 100,
-                width: 100,
-                alignment: Alignment.center,
-                child: RaisedButton(
-                  
-                  color: Colors.blue,
-                  child: Text(isUpdate ? "Update" : "Submit",style: TextStyle(color: Colors.white),),
-                  onPressed: ()  {
-                     setState(() {
-                   _interest.text.isEmpty ? _validateU = true : _validateU = false;
-                  
-                });
-                if(!_validateU&&!isUpdate)
-                {
-                  _makePostReq(_interest.text.toString().split(",").toList());
-                  
-                }
-                if(!_validateU)
-                {
-                   _makePutRequest(_interest.text.toString().split(",").toList());
-                   
-                }
-                
-                
-                  
+       
            
-             
-      
-
+                
            
                 
                    
@@ -333,11 +275,9 @@ class _InterestAState extends State<InterestA> {
                  
 
                 
-                    
-                  },
-                ),
-              ),
-              SizedBox(height: 200,),
+                    SizedBox(height: 200,),
+                 
+              
               
               Padding(
                 padding: const EdgeInsets.only(right: 10),
@@ -354,7 +294,7 @@ class _InterestAState extends State<InterestA> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       
                       children: <Widget>[
-                        Text( isSuccess ? "CONTINUE" :"SKIP",style: TextStyle(fontSize: 20,color: Colors.blue),),
+                        Text( "SKIP",style: TextStyle(fontSize: 20,color: Colors.blue),),
                         Icon(Icons.arrow_forward_ios,color: Colors.blue)
                       ],
                     )),
