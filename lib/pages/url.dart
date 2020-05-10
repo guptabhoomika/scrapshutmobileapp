@@ -22,6 +22,8 @@ class _URLState extends State<URL> {
   bool _validateU = false;
    bool _validateR = false;
     bool _validateT = false;
+    bool isfake = false;
+    bool isanonymous = false;
   
 
  Home _home;
@@ -69,7 +71,11 @@ _showSnackBar(int stauscode) {
             "content": "content",
             "review": review,
             "url": urlC,
-            "tags":tags
+            "tags":tags,
+            "fake": isfake,
+            "anonymous":isanonymous,
+ 
+
 });
   print(json);
 
@@ -94,6 +100,7 @@ _showSnackBar(int stauscode) {
         backgroundColor: Colors.black,
         action: new SnackBarAction(label: "LogOut",textColor: Colors.white, onPressed: (){
               
+              Home().method();
         }),
     );
     //How to display Snackbar ?
@@ -117,6 +124,8 @@ _showSnackBar(int stauscode) {
    }
   else if(statusCode == 400)
    {
+     Map<String,dynamic> err = jsonDecode(response.body);
+     print(err);
     
    
      final snackBar = new SnackBar(
@@ -293,6 +302,34 @@ _showSnackBar(int stauscode) {
                   
                 ],
               ),
+            
+               
+               
+               
+              CheckboxListTile(
+                 dense: true,
+                 value: isfake, 
+               onChanged: (val){
+                 setState(() {
+                   isfake = val;
+                 });
+               },
+               title: Text("Fake"),
+               controlAffinity: ListTileControlAffinity.leading
+               ),
+                CheckboxListTile(
+                 dense: true,
+                 value: isanonymous, 
+               onChanged: (val){
+                 setState(() {
+                   isanonymous = val;
+                 });
+               },
+               title: Text("Anonymous"),
+               controlAffinity: ListTileControlAffinity.leading
+               ),
+             
+
               Container(
                 height: 100,
                 width: 100,

@@ -3,6 +3,7 @@ import 'package:sssocial/pages/home.dart';
 import 'package:sssocial/pages/img.dart';
 import 'package:sssocial/pages/interest.dart';
 import 'package:sssocial/pages/msg.dart';
+import 'package:sssocial/pages/scrapcoin.dart';
 import 'package:sssocial/pages/url.dart';
 class Main extends StatefulWidget {
   //bool isAuth;
@@ -103,9 +104,16 @@ return Scaffold(
   );
         },
       ),
-      // ListTile(
-      //   title: Text("Inside Screen"),
-      // )
+      ListTile(
+        title: Text("Scrapcoins"),
+        onTap: (){
+           Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ScrapCoin()),
+  );
+
+        },
+      )
     ],
   ),
                 ),

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'home.dart';
+
 class Img extends StatefulWidget {
   @override
   _ImgState createState() => _ImgState();
@@ -18,6 +20,8 @@ TextEditingController _tags;
 class _ImgState extends State<Img> {
   Dio dio = new Dio();
   File img;
+  bool isfake = false;
+    bool isanonymous = false;
 
   @override
   void initState() {
@@ -135,6 +139,29 @@ class _ImgState extends State<Img> {
               )
             ],
           ),
+          CheckboxListTile(
+                 dense: true,
+                 value: isfake, 
+               onChanged: (val){
+                 setState(() {
+                   isfake = val;
+                 });
+               },
+               title: Text("Fake"),
+               controlAffinity: ListTileControlAffinity.leading
+               ),
+                CheckboxListTile(
+                 dense: true,
+                 value: isanonymous, 
+               onChanged: (val){
+                 setState(() {
+                   isanonymous = val;
+                 });
+               },
+               title: Text("Anonymous"),
+               controlAffinity: ListTileControlAffinity.leading
+               ),
+             
           //submitbutton
           Container(
             alignment: Alignment.center,
@@ -160,7 +187,9 @@ class _ImgState extends State<Img> {
                         filename: filename,
                         contentType:
                             MediaType(mimeTypeData[0], mimeTypeData[1])),
-                            "tags" : list
+                            "tags" : list,
+                            "fake": isfake,
+                           "anonymous": isanonymous,
                     //print(_tags.
                   });
             
@@ -184,9 +213,63 @@ class _ImgState extends State<Img> {
 
                   print(response.statusCode);
                   print(response);
-                  
-                  print(_tags.text.toString().split(",").toList());
+                  if(response.statusCode == 201)
+                  {
+                    print(_tags.text.toString().split(",").toList());
                   showSnackBar(response.statusCode);
+
+                  }
+                else if(response.statusCode == 401)
+   {
+     final snackBar = new SnackBar(
+        content: Text("Unauthorized access"),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "LogOut",textColor: Colors.white, onPressed: (){
+          Home().method();
+              
+        }),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+   }
+     else if(response.statusCode == 500)
+   {
+     final snackBar = new SnackBar(
+        content: Text("Server error please contact team@scrapshut.com"),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
+         
+              
+        }),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+   }
+  else if(response.statusCode == 400)
+   {
+    
+   
+     final snackBar = new SnackBar(
+        content: Text(response.statusMessage),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
+              
+        }),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+   }
+    
+  
+
+            
+                  
                 } catch (e) {
                   print(e);
                 }

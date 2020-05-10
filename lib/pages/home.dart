@@ -133,26 +133,14 @@ else{
           });
   });
 }
- Future<void> logout() async {
-   //await googlesignin.disconnect();
-    await googlesignin.signOut();
-   
-
-   storage.delete(key: 'btoken');
-   storage.delete(key: 'token');
+ Future logout() async {
+    try {
+      //await _fireBaseAuthInstance.signOut();
+      await googlesignin.signOut();
+    } catch (e) {
+      print('Failed to signOut' + e.toString());
+    }
    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-   
-     //isAuth = false;
-   
-print("isauth after logout");
-print(isAuth);
-Timer(Duration(seconds: 3), () {
-  
-  print("Yeah, this line is printed after 3 seconds");
-});
-
-print("2");
-    
 }
 
 

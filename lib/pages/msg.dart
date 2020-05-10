@@ -7,6 +7,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'home.dart';
+
 class Msg extends StatefulWidget {
   @override
   _MsgState createState() => _MsgState();
@@ -22,6 +24,8 @@ class _MsgState extends State<Msg> {
    bool _validateU = false;
    bool _validateR = false;
     bool _validateT = false;
+    bool isfake = false;
+    bool isanonymous = false;
   
   @override
 void initState() {
@@ -59,8 +63,10 @@ _showSnackBar(int stauscode) {
             "review": review,
             // "url": urlC,
             // "tags":tags
+            "fake": isfake,
+            "anonymous": isanonymous,
 });
-  print(json);
+  //print(json);
 
   // make POST request
 
@@ -68,7 +74,7 @@ _showSnackBar(int stauscode) {
   print(response.body);
    int statusCode = response.statusCode;
    print(statusCode);
-    if(statusCode == 200)
+    if(statusCode == 201)
    {
        print("statusCode");
      print(statusCode);
@@ -82,6 +88,7 @@ _showSnackBar(int stauscode) {
         duration: new Duration(seconds: 3),
         backgroundColor: Colors.black,
         action: new SnackBarAction(label: "LogOut",textColor: Colors.white, onPressed: (){
+          Home().method();
               
         }),
     );
@@ -261,7 +268,31 @@ _showSnackBar(int stauscode) {
                   )
                   
                 ],
+
               ),
+               CheckboxListTile(
+                 dense: true,
+                 value: isfake, 
+               onChanged: (val){
+                 setState(() {
+                   isfake = val;
+                 });
+               },
+               title: Text("Fake"),
+               controlAffinity: ListTileControlAffinity.leading
+               ),
+                CheckboxListTile(
+                 dense: true,
+                 value: isanonymous, 
+               onChanged: (val){
+                 setState(() {
+                   isanonymous = val;
+                 });
+               },
+               title: Text("Anonymous"),
+               controlAffinity: ListTileControlAffinity.leading
+               ),
+             
               Container(
                 height: 100,
                 width: 100,
