@@ -13,11 +13,13 @@ class Img extends StatefulWidget {
   @override
   _ImgState createState() => _ImgState();
 }
-
+// importing flutter storage
 final storage = new FlutterSecureStorage();
+// adding texteditingcontroller to field called tags
 TextEditingController _tags;
 
 class _ImgState extends State<Img> {
+  // declaring di
   Dio dio = new Dio();
   File img;
   bool isfake = false;
@@ -33,6 +35,7 @@ class _ImgState extends State<Img> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   var imgPicker;
+  // snackbar  for showing responses error sucess 
   showSnackBar(int stauscode) {
     print("Show Snackbar here !");
     final snackBar = new SnackBar(
@@ -92,6 +95,7 @@ class _ImgState extends State<Img> {
               color: Colors.red,
               child:
                   Text("SELECT IMAGE", style: TextStyle(color: Colors.white)),
+                  // whenever select image button is clicked Imagepicker will open gallery  and user can pick an image
               onPressed: () async {
                 imgPicker =
                     await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -100,6 +104,7 @@ class _ImgState extends State<Img> {
                   setState(() {
                     img = imgPicker;
                   });
+                  // if the image file isnt empty show the snackbar
                   showSnackBara();
                 }
               },
@@ -139,6 +144,7 @@ class _ImgState extends State<Img> {
               )
             ],
           ),
+          // fake checkbox
           CheckboxListTile(
                  dense: true,
                  value: isfake, 
@@ -147,9 +153,10 @@ class _ImgState extends State<Img> {
                    isfake = val;
                  });
                },
-               title: Text("Fake"),
+               title: Text(" Might be Fake"),
                controlAffinity: ListTileControlAffinity.leading
                ),
+              //  anonymous checkbox
                 CheckboxListTile(
                  dense: true,
                  value: isanonymous, 
@@ -158,7 +165,7 @@ class _ImgState extends State<Img> {
                    isanonymous = val;
                  });
                },
-               title: Text("Anonymous"),
+               title: Text(" Make this Anonymous"),
                controlAffinity: ListTileControlAffinity.leading
                ),
              
@@ -172,6 +179,7 @@ class _ImgState extends State<Img> {
               child: Text("SUBMIT", style: TextStyle(color: Colors.white)),
               onPressed: () async {
                 try {
+                  // getting the image by splitting / and storing it in variable called filename
                   String filename = img.path.split("/").last;
                   
 
@@ -181,7 +189,7 @@ class _ImgState extends State<Img> {
                   List<String> tags = _tags.text.toString().split(",").toList();
                   var list = jsonEncode(tags);
                   print(list);
-
+                    // making it into form data for endpoint
                   FormData formData = new FormData.fromMap({
                     "picture": await MultipartFile.fromFile(img.path,
                         filename: filename,
@@ -219,6 +227,7 @@ class _ImgState extends State<Img> {
                   showSnackBar(response.statusCode);
 
                   }
+                  // if there is status code of 401 then logout will be triggered
                 else if(response.statusCode == 401)
    {
      final snackBar = new SnackBar(

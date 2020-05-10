@@ -24,19 +24,19 @@ import 'package:sssocial/pages/url.dart';
 
 
 import 'msg.dart';
-
+// declaring storage varaibles
 final storage = new FlutterSecureStorage();
 String auth="https://backend.scrapshut.com/a/google/";
 
 
-
+// declaring signing
 final googlesignin= GoogleSignIn();
 class Home extends StatefulWidget{ 
  
-
+// this method is called  from scree folder which calls logout function to logout user
   method() => createState().logout();
-  // buildAuth(context) => createState().buildAuthScreen(context);
-  
+
+// login function present in home.dart  
   login() => createState().login();
 
   @override
@@ -57,6 +57,7 @@ String token ='';
 String value='';
 String gtoken='';
 @override
+// initial state checking if user is authenticated or not 
 void initState(){
 super.initState();
 googlesignin.onCurrentUserChanged.listen((account){
@@ -94,6 +95,7 @@ else{
 }
 });
 }
+// this function is  triggered when ever user uses google to signin
  login()  {
   googlesignin.signIn().then((result){
         result.authentication.then((googleKey) async {
@@ -133,6 +135,7 @@ else{
           });
   });
 }
+// this function is troggered whenever user clicks logout from scree.dart in screens 
  Future logout() async {
     try {
       //await _fireBaseAuthInstance.signOut();
@@ -249,6 +252,7 @@ else{
   
 
 // }
+// whenever isAuth=False i.e if user isnt authenticated this screen is showed to him
  Scaffold buildUnAuthScreen(){
  return Scaffold(
 body: Container(
@@ -286,7 +290,10 @@ alignment: Alignment.center,
     //    color:Colors.lightBlue,
     //    ),
     //    ),
-       RaisedButton(         
+
+
+       RaisedButton(   
+        //  whenever this button is  pressed then the login function which is present in home.dart will be triggered       
          onPressed: login(),
          child: Container(
            width:450.0,
@@ -309,7 +316,8 @@ alignment: Alignment.center,
   Widget  build(BuildContext context){
     print("is auth in build");
     print(isAuth);
-
+// if isAuth value is true then it will call IntrestA which will trigger intrestaftersignin page 
+// else it will show the buildUnAuthScreen()
     return isAuth ? InterestA() : buildUnAuthScreen();
   
   }

@@ -278,7 +278,7 @@ _showSnackBar(int stauscode) {
                    isfake = val;
                  });
                },
-               title: Text("Fake"),
+               title: Text("Might be Fake"),
                controlAffinity: ListTileControlAffinity.leading
                ),
                 CheckboxListTile(
@@ -289,7 +289,7 @@ _showSnackBar(int stauscode) {
                    isanonymous = val;
                  });
                },
-               title: Text("Anonymous"),
+               title: Text("Make this Anonymous"),
                controlAffinity: ListTileControlAffinity.leading
                ),
              

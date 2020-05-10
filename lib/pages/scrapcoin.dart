@@ -50,7 +50,7 @@ class _ScrapCoinState extends State<ScrapCoin> {
             Container(
     
             child: Text(
-                "For Organiation's or student's who wants to use opensource  dataset's \n  please update your tags \n Visit: \"Developers.scrapshut.com\"\n For more INFO ",
+                "Every time you post something \n  you get a scrapcoin   \n where you can use them to advertise your brand \n on SocialScrap APP",
           textAlign: TextAlign.center,
     
         ),
