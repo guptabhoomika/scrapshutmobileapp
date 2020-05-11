@@ -11,6 +11,8 @@ import 'package:http/http.dart';
 import '../pages/home.dart';
 import 'package:sssocial/screens/scree.dart';
 
+import '../widgets/loader.dart';
+
 
 
 class InterestA extends StatefulWidget {
@@ -23,7 +25,7 @@ class _InterestAState extends State<InterestA> {
    bool isUpdate = false;
    List<dynamic> _tags;
    bool isSuccess = false;
-  
+
 
 
    TextEditingController _interest;
@@ -58,6 +60,7 @@ class _InterestAState extends State<InterestA> {
   List<dynamic> results = val['results'];
   print(results);
   setState(() {
+    
     _tags = results[0]["tags"];
   });
  
@@ -200,6 +203,7 @@ class _InterestAState extends State<InterestA> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.white,
     
       appBar: AppBar(),
       body: 
@@ -229,12 +233,12 @@ class _InterestAState extends State<InterestA> {
               padding: const EdgeInsets.only(top: 50,left: 50,right: 50),
               child: Container(
                 //color: Colors.red,
-               height: 50,
+               height: _tags.isEmpty ? 100 : 50,
                width: double.infinity,
                 
                 // child: _tags.isEmpty ? Text("KiRa OpenSource dataset's powered by ScrapShut\n Opensource DataSet's for every aspiring technocrat \n Project Kira gives you database access of scrapshut  For Free  \n If want this dataset's  for your organization then please add your tags in  Intrests Section  \n If you want to contribute/support this  opensource initiative you can power it up by posting content\n where your data will be seggregated based on the tags and will be used for creating future tech  " ,          textAlign: TextAlign.center,): 
 
-                child: _tags.isEmpty ? Center(child: Text("Getting your data")) : 
+                child: _tags.isEmpty ? loader(300,300): 
                 ListView.builder(
                   scrollDirection: Axis.horizontal,
                   //shrinkWrap: true,

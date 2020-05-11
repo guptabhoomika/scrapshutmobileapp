@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../widgets/loader.dart';
 import 'home.dart';
 final storage = new FlutterSecureStorage();
 
@@ -18,7 +19,8 @@ class _InterestState extends State<Interest> {
    bool isUpdate = false;
    List<dynamic> _tags;
    bool isSuccess = false;
-   Home _home;
+   bool isFetching = false;
+
 
 
    TextEditingController _interest;
@@ -28,7 +30,7 @@ class _InterestState extends State<Interest> {
     // TODO: implement initState
     _tags = new List<dynamic>();
     _interest = TextEditingController();
-    _home = Home();
+    
     _makeGetRequest();
     super.initState();
   }
@@ -89,6 +91,9 @@ class _InterestState extends State<Interest> {
   // TODO convert json to object...
 }
   _makePutRequest(List<String> tags) async {
+    setState(() {
+      isFetching = true;
+    });
     String bvalue = await storage.read(key: 'btoken');
   // set up PUT request arguments
   String url = 'https://backend.scrapshut.com/user/profile/';
@@ -105,9 +110,13 @@ class _InterestState extends State<Interest> {
   // make PUT request
   Response response = await put(url, headers: headers, body: json);
   // check the status code for the result
+  setState(() {
+    isFetching = false;
+  });
   int statusCode = response.statusCode;
   // this API passes back the updated item with the id added
   print(statusCode);
+  
   
   if(statusCode==200)
     {
@@ -143,6 +152,9 @@ class _InterestState extends State<Interest> {
 
    _makePostReq(List<String> tags) async
   {
+    setState(() {
+      isFetching = true;
+    });
     String bvalue = await storage.read(key: 'btoken');
 
   String url = 'https://backend.scrapshut.com/user/profile/';
@@ -161,6 +173,9 @@ class _InterestState extends State<Interest> {
 
   Response response = await post(url,headers: headers, body: json);
   print(response.body);
+  setState(() {
+    isFetching = false;
+  });
    int statusCode = response.statusCode;
    print(statusCode);
     if(statusCode==201)
@@ -217,7 +232,7 @@ class _InterestState extends State<Interest> {
                 //color: Colors.red,
                 height: 50,
                 width: 200,
-                child: _tags.isEmpty ? Text("Getting your data") : 
+                child: _tags.isEmpty ? loader(100, 100) : 
                 ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -245,7 +260,7 @@ class _InterestState extends State<Interest> {
                   } ),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 40,),
             Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
@@ -285,7 +300,7 @@ class _InterestState extends State<Interest> {
                 height: 100,
                 width: 100,
                 alignment: Alignment.center,
-                child: RaisedButton(
+                child: isFetching ? loader(200, 200)  : RaisedButton(
                   
                   color: Colors.blue,
                   child: Text(isUpdate ? "Update" : "Submit",style: TextStyle(color: Colors.white),),
