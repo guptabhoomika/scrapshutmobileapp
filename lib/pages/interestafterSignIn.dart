@@ -82,6 +82,10 @@ class _InterestAState extends State<InterestA> {
   
 
   }
+  else if(statusCode==401)
+  {
+    Home().method();
+  }
   else
   {
     print("Error in getting response");
@@ -210,6 +214,9 @@ class _InterestAState extends State<InterestA> {
         ListView(
           
           children: <Widget>[
+            SizedBox(
+              height: 40,
+            ),
             Container(
               height: 100,
               width: 100,
@@ -226,8 +233,36 @@ class _InterestAState extends State<InterestA> {
       ),
           
             ),
-            Container(
-              child: Text("KiRa OpenSource dataset's powered by ScrapShut\n Opensource DataSet's for NextGenTech \n Project Kira gives you database access of scrapshut  For Free  \n \"\ Visit:Developers.scrapshut.com \"\ \n For more Info  " ,          textAlign: TextAlign.center),
+
+
+            SizedBox(
+              height: 40,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                
+                 
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                    child: Text("KiRa OpenSource dataset's powered by ScrapShut,",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w600),),
+                  ) ,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                    child: Text("Opensource DataSet's for NextGenTech" ,textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w600)),
+                  ) ,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                    child: Text("Project Kira gives you database access of scrapshut  for free ",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w600)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                    child: Text("Visit :Developers.scrapshut.com for more info",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w600,color: Colors.blue)),
+
+                  )
+                
+              ],
             ),
             Padding(
               padding: const EdgeInsets.only(top: 50,left: 50,right: 50),
@@ -247,6 +282,7 @@ class _InterestAState extends State<InterestA> {
                   itemBuilder: (context,index){
              
                                           return Container(
+                                            alignment: Alignment.center,
                   
                       height: 3,
                         margin: EdgeInsets.only(right: 10),
@@ -279,7 +315,7 @@ class _InterestAState extends State<InterestA> {
                  
 
                 
-                    SizedBox(height: 200,),
+                    SizedBox(height: 150,),
                  
               
               
