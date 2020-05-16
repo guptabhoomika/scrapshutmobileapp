@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../widgets/loader.dart';
 import 'home.dart';
 
 class Msg extends StatefulWidget {
@@ -26,6 +27,7 @@ class _MsgState extends State<Msg> {
     bool _validateT = false;
     bool isfake = false;
     bool isanonymous = false;
+    bool isFetching = false;
   
   @override
 void initState() {
@@ -52,6 +54,9 @@ _showSnackBar(int stauscode) {
   }
   _makePostReq(String content,List<String> tags,int rating,String review) async
   {
+    setState(() {
+      isFetching = true;
+    });
         String bvalue = await storage.read(key: 'btoken');
 
   String url = 'https://backend.scrapshut.com/api/msg/';
@@ -72,6 +77,9 @@ _showSnackBar(int stauscode) {
 
   Response response = await post(url,headers: headers, body: json);
   print(response.body);
+  setState(() {
+    isFetching =false;
+  });
    int statusCode = response.statusCode;
    print(statusCode);
     if(statusCode == 201)
@@ -116,6 +124,7 @@ _showSnackBar(int stauscode) {
     Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.white,
       body: ListView(
       padding: EdgeInsets.all(8),
           
@@ -294,13 +303,14 @@ _showSnackBar(int stauscode) {
                ),
              
               Container(
-                height: 100,
-                width: 100,
+              
+                height: isFetching == true ? 200 : 100,
+                width: isFetching == true ? 200 : 100,
                 alignment: Alignment.center,
                 child: RaisedButton(
-                  
-                  color: Colors.blue,
-                  child: Text("Submit",style: TextStyle(color: Colors.white),),
+                  elevation: 0.0,
+                  color: isFetching== true ? Colors.white : Colors.blue,
+                  child: isFetching==true ? loader(200, 200) : Text("Submit",style: TextStyle(color: Colors.white),),
                   onPressed: ()  {
                      setState(() {
                   _message.text.isEmpty ? _validateU = true : _validateU = false;

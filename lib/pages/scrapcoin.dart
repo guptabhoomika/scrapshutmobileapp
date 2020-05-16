@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
+import '../widgets/loader.dart';
 import 'home.dart';
 class ScrapCoin extends StatefulWidget {
   @override
@@ -63,7 +64,7 @@ class _ScrapCoinState extends State<ScrapCoin> {
             child: 
             Padding(
               padding: const EdgeInsets.all(60),
-              child: scrapCoins == null ? CircularProgressIndicator() :
+              child: scrapCoins == null ?  loader(200,600) :
               Container(
                 width:200,
                 height: 100,

@@ -6,6 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import  '../pages/home.dart';
+import '../widgets/loader.dart';
 
 class URL extends StatefulWidget {
   @override
@@ -24,15 +25,16 @@ class _URLState extends State<URL> {
     bool _validateT = false;
     bool isfake = false;
     bool isanonymous = false;
+    bool isFetching = false;
   
 
- Home _home;
+ 
   @override
   void initState() {
     _url = TextEditingController();
     _review = TextEditingController();
     _tags = TextEditingController();
-    _home = Home();
+   
 
   
     // TODO: implement initState
@@ -56,6 +58,9 @@ _showSnackBar(int stauscode) {
   }
   _makePostReq(String urlC,List<String> tags,int rating,String review) async
   {
+    setState(() {
+      isFetching = true;
+    });
     String bvalue = await storage.read(key: 'btoken');
 
   String url = 'https://backend.scrapshut.com/api/post/';
@@ -83,6 +88,9 @@ _showSnackBar(int stauscode) {
 
   Response response = await post(url,headers: headers, body: json);
   print(response.body);
+  setState(() {
+    isFetching = false;
+  });
   print(response.statusCode);
    int statusCode = response.statusCode;
    if(statusCode == 201)
@@ -148,6 +156,7 @@ _showSnackBar(int stauscode) {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.white,
       body: ListView(
       padding: EdgeInsets.all(8),
           
@@ -331,12 +340,12 @@ _showSnackBar(int stauscode) {
              
 
               Container(
-                height: 100,
-                width: 100,
+                height: isFetching == true ? 200 : 100,
+                width: isFetching == true ? 200 :100,
                 alignment: Alignment.center,
-                child: RaisedButton(
+                child:  isFetching == true ? loader(200, 200) : RaisedButton(
                   
-                  color: Colors.blue,
+                  color:  isFetching == true? Colors.white:  Colors.blue,
                   child: Text("Submit",style: TextStyle(color: Colors.white),),
                   onPressed: ()  {
                     setState(() {
@@ -344,8 +353,10 @@ _showSnackBar(int stauscode) {
                   _review.text.isEmpty ? _validateR = true : _validateR = false;
                   _tags.text.isEmpty ? _validateT = true : _validateT = false;
                 });
+                
                 if(!_validateR&&!_validateU&&!_validateT)
                 {
+
                    _makePostReq(_url.text, _tags.text.toString().split(",").toList(),ratings, _review.text);
                 }
               

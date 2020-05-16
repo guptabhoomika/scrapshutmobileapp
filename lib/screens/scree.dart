@@ -10,64 +10,42 @@ class Main extends StatefulWidget {
   @override
   _MainState createState() => _MainState();
 }
+TabController _tabController;
 
-class _MainState extends State<Main> {
+class _MainState extends State<Main> with SingleTickerProviderStateMixin{
+  @override
+  void initState() {
+    // TODO: implement initState
+    _tabController = new TabController(length: 3,initialIndex: 0, vsync: this);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     
 return Scaffold(
+  appBar: AppBar(
+  
+    bottom: TabBar(
+      controller: _tabController,
+      indicatorColor: Colors.white,
 
-  body: Container(
-    height: MediaQuery.of(context).size.height,
-    width: double.infinity,
-    child: DefaultTabController(
-      child: Scaffold(
-         appBar: AppBar(
-                  elevation: 0.0,
-                  backgroundColor: Colors.blue[100],
-                  bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(25),
-                    child: Container(
-                      color: Colors.transparent,
-                      child: SafeArea(
-                        child: Column(
-                          children: <Widget>[
-                            TabBar(
-                                indicator: UnderlineTabIndicator(
-                                    borderSide: BorderSide(
-                                        color: Colors.red
-                                        , width: 6.0),
-                                    insets: EdgeInsets.fromLTRB(
-                                        40.0, 20.0, 40.0, 0)),
-                                indicatorWeight: 15,
-                                indicatorSize: TabBarIndicatorSize.label,
-                                labelColor: Colors.white,
-                                labelStyle: TextStyle(
-                                    fontSize: 12,
-                                   
-                                    fontWeight: FontWeight.bold),
-                                unselectedLabelColor: Colors.white,
-                                tabs: [
-                                  Tab(
-                                    text: "URL",
-                                    
-                                  ),
-                                  Tab(
-                                    text: "MESSAGE",
-                                   
-                                  ),
-                                  Tab(
-                                    text: "IMAGE",
-                                  
-                                  ),
-                                ])
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+       tabs: [
+        Tab(
+          text: "URL",
+        ),
+        Tab(
+          text: "Message",
+        ),
+        Tab(
+          text: "Image",
+        )
+      ],
+    ),
+  ),
+
+
                   
-                ),
+                
                 drawer: Drawer(
                  child: ListView(
     // Important: Remove any padding from the ListView.
@@ -118,17 +96,16 @@ return Scaffold(
   ),
                 ),
                   body: TabBarView(
+                    controller: _tabController,
                   children: <Widget>[
                     URL(),
                     Msg(),  
                     Img(),
                     
                   ],
-                )
-                ), 
-                length: 3,
-                )
-                )
+                                 )
+                
+               
                 
       );
       

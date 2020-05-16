@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../widgets/loader.dart';
 import 'home.dart';
 
 class Img extends StatefulWidget {
@@ -24,6 +25,7 @@ class _ImgState extends State<Img> {
   File img;
   bool isfake = false;
     bool isanonymous = false;
+    bool isFetching = false;
 
   @override
   void initState() {
@@ -71,7 +73,9 @@ class _ImgState extends State<Img> {
     // AssetImage assetImage =AssetImage("assets/images/scrap_withoutbg.png");
     // Image image=Image(image:assetImage,width: 150,height: 220,);
     // return Container(child :image);
+     Response response;
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
 // body :<Widget>[]
       body: ListView(
@@ -97,6 +101,7 @@ class _ImgState extends State<Img> {
                   Text("SELECT IMAGE", style: TextStyle(color: Colors.white)),
                   // whenever select image button is clicked Imagepicker will open gallery  and user can pick an image
               onPressed: () async {
+                
                 imgPicker =
                     await ImagePicker.pickImage(source: ImageSource.gallery);
 
@@ -172,12 +177,16 @@ class _ImgState extends State<Img> {
           //submitbutton
           Container(
             alignment: Alignment.center,
-            height: 100,
-            width: 100,
+            height: isFetching==true ?  200 : 100,
+            width: isFetching==true ?  200 : 100,
             child: RaisedButton(
-              color: Colors.blue,
-              child: Text("SUBMIT", style: TextStyle(color: Colors.white)),
+              color: isFetching==true? Colors.white : Colors.blue,
+              elevation: 0.0,
+              child: isFetching==true? loader(200, 200) : Text("SUBMIT", style: TextStyle(color: Colors.white)),
               onPressed: () async {
+                setState(() {
+                  isFetching = true;
+                });
                 try {
                   // getting the image by splitting / and storing it in variable called filename
                   String filename = img.path.split("/").last;
@@ -208,7 +217,7 @@ class _ImgState extends State<Img> {
                   dio.options.headers['content-Type'] = 'application/json';
                   dio.options.headers["Authorization"] = "JWT ${bvalue}";
 
-                  Response response = await dio.post(url, data: formData);
+                  response = await dio.post(url, data: formData);
                   print(tags);
                  
                 
@@ -221,6 +230,9 @@ class _ImgState extends State<Img> {
 
                   print(response.statusCode);
                   print(response);
+                  setState(() {
+                    isFetching = false;
+                  });
                   if(response.statusCode == 201)
                   {
                     print(_tags.text.toString().split(",").toList());

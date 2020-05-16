@@ -60,40 +60,40 @@ String gtoken='';
 // initial state checking if user is authenticated or not 
 void initState(){
 super.initState();
-googlesignin.onCurrentUserChanged.listen((account){
-if (account != null){
-  print("user signed in ");
-  setState(() {
+// googlesignin.onCurrentUserChanged.listen((account){
+// if (account != null){
+//   print("user signed in ");
+//   setState(() {
     
 
-   isAuth=true;
-  });
-}
-else{
-  setState(() {
+//    isAuth=true;
+//   });
+// }
+// else{
+//   setState(() {
     
-    //isAuth=false;
-  });
-}
-},onError:(err){
-  print("eror signing in $err");
-});
-googlesignin.signInSilently(suppressErrors:false)
-.then((account){
-  if (account != null){
-  print("user signed ");
-  setState(() {
+//     //isAuth=false;
+//   });
+// }
+// },onError:(err){
+//   print("eror signing in $err");
+// });
+// googlesignin.signInSilently(suppressErrors:false)
+// .then((account){
+//   if (account != null){
+//   print("user signed ");
+//   setState(() {
     
-    isAuth=true;
-  });
-}
-else{
-  setState(() {
+//     isAuth=true;
+//   });
+// }
+// else{
+//   setState(() {
     
-    //isAuth=false;
-  });
-}
-});
+//     //isAuth=false;
+//   });
+// }
+// });
 }
 // this function is  triggered when ever user uses google to signin
  login()  {
@@ -116,6 +116,9 @@ else{
 
           );
  if(response.statusCode == 200) {
+   setState(() {
+     isAuth = true;
+   });
       String responseBody = response.body;
       print(responseBody);
      Map<String, dynamic> responseJson = jsonDecode(response.body);
@@ -139,6 +142,7 @@ else{
  Future logout() async {
     try {
       //await _fireBaseAuthInstance.signOut();
+      await  googlesignin.disconnect();
       await googlesignin.signOut();
     } catch (e) {
       print('Failed to signOut' + e.toString());
@@ -294,7 +298,10 @@ alignment: Alignment.center,
 
        RaisedButton(   
         //  whenever this button is  pressed then the login function which is present in home.dart will be triggered       
-         onPressed: login(),
+         onPressed: (){
+           print('tap');
+           login();
+         },
          child: Container(
            width:450.0,
            height:60.0,
