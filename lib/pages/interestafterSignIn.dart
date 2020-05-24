@@ -325,7 +325,13 @@ class _InterestAState extends State<InterestA> {
                   onTap: (){
                     //Home().buildAuth(context);
                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Main()));
+                        Navigator.of(context).push(PageRouteBuilder(
+    opaque: false,
+    pageBuilder: (BuildContext context, _, __) =>
+        SomeDialog()));
+    
                     print("tap");
+
                   },              
                     
                                   child: Container(
@@ -343,6 +349,19 @@ class _InterestAState extends State<InterestA> {
           ],
         ),
       
+    );
+  }
+}
+class SomeDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      backgroundColor: Colors.black.withOpacity(0.75),
+      appBar: AppBar(
+        backgroundColor: Colors.black.withOpacity(0.75) ,
+      ),
+      
+      body: Center(child: new Text("It's a Dialog!",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
     );
   }
 }
