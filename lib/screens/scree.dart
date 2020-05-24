@@ -36,7 +36,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin{
           Navigator.of(context).push(PageRouteBuilder(
     opaque: false,
     pageBuilder: (BuildContext context, _, __) =>
-        SomeDialog()));
+        SomeDialog(type: "msg")));
     
     setState(() {
       msg = true;
@@ -48,7 +48,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin{
         Navigator.of(context).push(PageRouteBuilder(
     opaque: false,
     pageBuilder: (BuildContext context, _, __) =>
-        SomeDialog()));
+        SomeDialog(type  : "img")));
         setState(() {
           img = true;
 
