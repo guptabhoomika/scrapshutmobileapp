@@ -275,6 +275,7 @@ alignment: Alignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
 
     children: <Widget>[
+     
             Container(
                 height:300,
                 width: 800,
@@ -294,7 +295,10 @@ alignment: Alignment.center,
     //    color:Colors.lightBlue,
     //    ),
     //    ),
-
+    
+        
+        //SizedBox(height: 20,),
+     
 
        RaisedButton(   
         //  whenever this button is  pressed then the login function which is present in home.dart will be triggered       
@@ -312,8 +316,11 @@ alignment: Alignment.center,
            ),   
          ),
        ),
-
-
+        
+      Padding(
+          padding: const EdgeInsets.only(left: 10,top: 10),
+          child: Text("By signing up you agree with our terms and service and privacy policy",style: TextStyle(color: Colors.black,fontSize: 10),),
+        ),
   ],),
 ),
  );
