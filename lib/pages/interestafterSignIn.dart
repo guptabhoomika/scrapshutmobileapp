@@ -328,7 +328,7 @@ class _InterestAState extends State<InterestA> {
                         Navigator.of(context).push(PageRouteBuilder(
     opaque: false,
     pageBuilder: (BuildContext context, _, __) =>
-        SomeDialog()));
+        SomeDialog(type: "url",)));
     
                     print("tap");
 
@@ -353,6 +353,10 @@ class _InterestAState extends State<InterestA> {
   }
 }
 class SomeDialog extends StatelessWidget {
+  final String type;
+
+  const SomeDialog({Key key, this.type}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -361,7 +365,24 @@ class SomeDialog extends StatelessWidget {
         backgroundColor: Colors.black.withOpacity(0.75) ,
       ),
       
-      body: Center(child: new Text("It's a Dialog!",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
+      body: content(type),
     );
+  }
+}
+
+
+Widget content(String type)
+{
+  if(type=="url")
+  {
+      return new Text("It's a  url Dialog!",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
+  }
+  else if(type == "img")
+  {
+      return new Text("It's a  img Dialog!",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
+  }
+  else if(type == "msg")
+  {
+      return new Text("It's a  msg Dialog!",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
   }
 }
