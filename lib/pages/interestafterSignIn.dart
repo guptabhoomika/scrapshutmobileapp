@@ -375,14 +375,14 @@ Widget content(String type)
 {
   if(type=="url")
   {
-      return new Text("It's a  url Dialog!",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
+      return new Text("\n                   \n                \n  \n    \n                      \n               \n \n                       \n  \n                                   \n you can rate anything over the internet \n you can review them and let the world know about that ",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
   }
   else if(type == "img")
   {
-      return new Text("It's a  img Dialog!",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
+      return new Text("\n                   \n                \n  \n    \n                      \n               \n \n                       \n  \n                                   \n           you can report Fake Images ",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
   }
   else if(type == "msg")
   {
-      return new Text("It's a  msg Dialog!",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
+      return new Text("\n                   \n                \n  \n    \n                      \n               \n \n                       \n  \n                                   \nRecived Forwarded Fake message \n Forward that message to us and prevent fake things being spread ",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),);
   }
 }

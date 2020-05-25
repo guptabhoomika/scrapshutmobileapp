@@ -51,7 +51,7 @@ class _ScrapCoinState extends State<ScrapCoin> {
             Container(
     
             child: Text(
-                "Every time you post something \n  you get a scrapcoin   \n where you can use them to advertise your brand \n on SocialScrap APP",
+                "Reinvent the wheel of advertisements like never before  \n  you can  be an brand influencer and advertise anything for free \n onWiringbridge APP \n Based on ScrapCoins ",
           textAlign: TextAlign.center,
     
         ),
@@ -61,9 +61,12 @@ class _ScrapCoinState extends State<ScrapCoin> {
              
 ),
           Center(
+
             child: 
             Padding(
+
               padding: const EdgeInsets.all(60),
+              
               child: scrapCoins == null ?  loader(200,600) :
               Container(
                 width:200,

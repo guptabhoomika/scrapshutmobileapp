@@ -90,7 +90,7 @@ return Scaffold(
     padding: EdgeInsets.zero,
     children: <Widget>[
       DrawerHeader(
-        child: Text('Scrashut For Deeptech'),
+        child: Text('Scrashut MiniTool'),
         decoration: BoxDecoration(
           color: Colors.blue,
         ),
