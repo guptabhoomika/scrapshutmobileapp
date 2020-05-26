@@ -49,14 +49,14 @@ class _ScrapCoinState extends State<ScrapCoin> {
         
         children: <Widget>[
             Container(
-    
+                  
             child: Text(
-                "Reinvent the wheel of advertisements like never before  \n  you can  be an brand influencer and advertise anything for free \n onWiringbridge APP \n Based on ScrapCoins ",
+                "Reinvent the wheel of advertisements like never before  \n  you can  be an brand influencer and advertise anything for free \n on Wiringbridge APP \n Based on ScrapCoins ",
           textAlign: TextAlign.center,
     
         ),
             padding: new EdgeInsets.all(50.0),
-              height: 200,
+              height: 250,
               width: 200,
              
 ),
@@ -65,7 +65,7 @@ class _ScrapCoinState extends State<ScrapCoin> {
             child: 
             Padding(
 
-              padding: const EdgeInsets.all(60),
+              padding: const EdgeInsets.all(55),
               
               child: scrapCoins == null ?  loader(200,600) :
               Container(

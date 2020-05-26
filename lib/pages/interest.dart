@@ -227,10 +227,10 @@ class _InterestState extends State<Interest> {
              
 ),
             Padding(
-              padding: const EdgeInsets.only(top: 50,left: 80,right: 20),
+              padding: const EdgeInsets.only(top: 40,left:30 ,right: 20),
               child: Container(
-                //color: Colors.red,
-                height: 50,
+              //color: Colors.red,
+                height: _tags.isEmpty? 100 : 50,
                 width: 200,
                 child: _tags.isEmpty ? loader(100, 100) : 
                 ListView.builder(
