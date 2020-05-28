@@ -7,8 +7,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+
 import '../widgets/loader.dart';
 import 'home.dart';
+import 'monetizePage.dart';
 
 class Msg extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class _MsgState extends State<Msg> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController _message;
   TextEditingController _review;
+    List<String> _monteizedata = List<String>();
   TextEditingController _tags;
   int ratings;
    bool _validateU = false;
@@ -320,7 +323,29 @@ _showSnackBar(int stauscode) {
                     _makePostReq(_message.text, _tags.text.toString().split(",").toList(),ratings, _review.text);
                   },
                 ),
-              )
+              ),
+           Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Container(
+                  
+                  //height: 200,
+                  //width: 300,
+                  alignment: Alignment.center,
+                  child: RaisedButton(
+                    elevation: 3.0,
+                    color: Colors.red,
+                    onPressed: () async{
+                   final result =    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Monetize()));
+                       setState(() {
+                        _monteizedata = result;
+                       });
+
+                      
+                    },
+                    child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                  ),
+                ),
+              ),
             ],
             
           ),

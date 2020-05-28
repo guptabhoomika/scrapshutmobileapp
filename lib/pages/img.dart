@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+
 import '../widgets/loader.dart';
 import 'home.dart';
+import 'monetizePage.dart';
 
 class Img extends StatefulWidget {
   @override
@@ -26,6 +28,7 @@ class _ImgState extends State<Img> {
   bool isfake = false;
     bool isanonymous = false;
     bool isFetching = false;
+      List<String> _monteizedata = List<String>();
 
   @override
   void initState() {
@@ -297,6 +300,28 @@ class _ImgState extends State<Img> {
               },
             ),
           ),
+           Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Container(
+                  
+                  //height: 200,
+                  //width: 300,
+                  alignment: Alignment.center,
+                  child: RaisedButton(
+                    elevation: 3.0,
+                    color: Colors.red,
+                    onPressed: () async{
+                   final result =    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Monetize()));
+                       setState(() {
+                        _monteizedata = result;
+                       });
+
+                      
+                    },
+                    child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                  ),
+                ),
+              ),
         ],
       ),
     );
