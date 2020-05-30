@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:http/http.dart' as http;
@@ -7,8 +8,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+
 import '../widgets/loader.dart';
 import 'home.dart';
+import 'monetizePage.dart';
 
 class Msg extends StatefulWidget {
   @override
@@ -20,6 +23,7 @@ class _MsgState extends State<Msg> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController _message;
   TextEditingController _review;
+    List<String> _monteizedata = List<String>();
   TextEditingController _tags;
   int ratings;
    bool _validateU = false;
@@ -28,6 +32,7 @@ class _MsgState extends State<Msg> {
     bool isfake = false;
     bool isanonymous = false;
     bool isFetching = false;
+    bool ispressed= false;
   
   @override
 void initState() {
@@ -61,7 +66,7 @@ _showSnackBar(int stauscode) {
 
   String url = 'https://backend.scrapshut.com/api/msg/';
   Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
-"Content-Type":"application/json"};
+"Content-Type":"application/json","API-KEY": "LrUyJbg2.hbzsN46K8ghSgF8LkhxgybbDnGqqYhKM"};
   String json = jsonEncode({
 			"rate": rating,
             "content": content,
@@ -320,7 +325,52 @@ _showSnackBar(int stauscode) {
                     _makePostReq(_message.text, _tags.text.toString().split(",").toList(),ratings, _review.text);
                   },
                 ),
-              )
+              ),
+           Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Container(
+                  
+                  //height: 200,
+                  //width: 300,
+                  alignment: Alignment.center,
+                  child: ispressed ? Card(
+                    elevation: 2.0,
+                                      child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple[50]
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                        children: <Widget>[
+                          Text("We are working on it."), 
+                          Text("Keep in touch for furhter updates"),
+                        ],
+                    ),
+                      )),
+                  ) :
+                   RaisedButton(
+                    elevation: 3.0,
+                    color: Colors.red,
+                  //   onPressed: () async{
+                  //  final result =    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Monetize()));
+                  //      setState(() {
+                  //       _monteizedata = result;
+                  //      });
+
+                      
+                  //   },
+                  onPressed: (){
+           
+                      setState(() {
+                        ispressed = true;
+                      });
+              
+                  },
+                    child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                  ),
+                ),
+              ),
             ],
             
           ),

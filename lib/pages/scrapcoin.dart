@@ -18,7 +18,7 @@ class _ScrapCoinState extends State<ScrapCoin> {
   // make GET request
   String url = 'https://backend.scrapshut.com/user/profile/';
    Map<String, String> headers = {"Authorization":"JWT $bvalue",
-          "Content-Type":"application/json"};
+          "Content-Type":"application/json","API-KEY": "LrUyJbg2.hbzsN46K8ghSgF8LkhxgybbDnGqqYhKM"};
 
 
   Response response = await http.get(url,headers: headers);

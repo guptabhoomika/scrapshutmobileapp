@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+
 import '../widgets/loader.dart';
 import 'home.dart';
+import 'monetizePage.dart';
 
 class Img extends StatefulWidget {
   @override
@@ -18,6 +20,7 @@ class Img extends StatefulWidget {
 final storage = new FlutterSecureStorage();
 // adding texteditingcontroller to field called tags
 TextEditingController _tags;
+bool ispressed = false;
 
 class _ImgState extends State<Img> {
   // declaring di
@@ -26,6 +29,7 @@ class _ImgState extends State<Img> {
   bool isfake = false;
     bool isanonymous = false;
     bool isFetching = false;
+      List<String> _monteizedata = List<String>();
 
   @override
   void initState() {
@@ -216,6 +220,8 @@ class _ImgState extends State<Img> {
                   Dio dio = new Dio();
                   dio.options.headers['content-Type'] = 'application/json';
                   dio.options.headers["Authorization"] = "JWT ${bvalue}";
+                  dio.options.headers["API-KEY"] = "LrUyJbg2.hbzsN46K8ghSgF8LkhxgybbDnGqqYhKM";
+                  
 
                   response = await dio.post(url, data: formData);
                   print(tags);
@@ -297,6 +303,49 @@ class _ImgState extends State<Img> {
               },
             ),
           ),
+           Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Container(
+                  
+                  //height: 200,
+                  //width: 300,
+                  alignment: Alignment.center,
+                  child: ispressed ? Card(
+                    elevation: 2.0,
+                                      child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple[50]
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                        children: <Widget>[
+                          Text("We are working on it."), 
+                          Text("Keep in touch for furhter updates"),
+                        ],
+                    ),
+                      )),
+                  ) :
+                   RaisedButton(
+                    elevation: 3.0,
+                    color: Colors.red,
+                  //   onPressed: () async{
+                  //  final result =    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Monetize()));
+                  //      setState(() {
+                  //       _monteizedata = result;
+                  //      });
+
+                      
+                  //   },
+                  onPressed: (){
+                    setState(() {
+                      ispressed = true;
+                    });
+                  },
+                    child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                  ),
+                ),
+              ),
         ],
       ),
     );
