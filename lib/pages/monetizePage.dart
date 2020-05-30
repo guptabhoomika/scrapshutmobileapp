@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
-class Monetize extends StatelessWidget {
+class Monetize extends StatefulWidget {
+  @override
+  _MonetizeState createState() => _MonetizeState();
+}
+TextEditingController _url;
+TextEditingController _content;
+TextEditingController _title;
+class _MonetizeState extends State<Monetize> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    _url =  new TextEditingController();
+    _content =  new TextEditingController();
+    _title =  new TextEditingController();
+    super.initState();
+  }
  final List<String> _data = List<String>();
- //list to check if data is being transfered to first pg
+
  additem()
  {
-   _data.add("Bhoomika");
-   _data.add("Gupta");
+   _data.add(_title.text);
+   _data.add(_url.text);
+   _data.add(_content.text);
+   
  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,10 +66,10 @@ class Monetize extends StatelessWidget {
                       width: 250,
                       child: TextFormField(
                         keyboardType: TextInputType.url,
-                      
+                      controller: _title,
                         textAlign: TextAlign.center,
                               decoration: InputDecoration(
-                            
+                                
                                 hintText: 'Title',
                                 
 
@@ -85,7 +103,7 @@ class Monetize extends StatelessWidget {
                       height: 45,
                       width: 250,
                       child: TextField(
-                
+                        controller: _url,
                         textAlign: TextAlign.center,
                               decoration: InputDecoration(
                               
@@ -120,6 +138,7 @@ class Monetize extends StatelessWidget {
                       //color: Colors.green,
                       width: 250,
                       child: TextField(
+                        controller: _content,
                       
                       maxLines: 7,
                         textAlign: TextAlign.center,

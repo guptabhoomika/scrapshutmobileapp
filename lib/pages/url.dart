@@ -29,6 +29,7 @@ class _URLState extends State<URL> {
     bool isanonymous = false;
     bool isFetching = false;
     List<String> _monteizedata = List<String>();
+    Map<String,String> _advertisement = Map<String,String>();
   
 
  
@@ -70,7 +71,7 @@ _showSnackBar(int stauscode) {
   // Map<String, String> headers = {"Authorization":"JWT $bvalue",
   //         "Content-Type":"application/json"};
   Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
-"Content-Type":"application/json"};
+"Content-Type":"application/json","API-KEY": "LrUyJbg2.hbzsN46K8ghSgF8LkhxgybbDnGqqYhKM"};
 //  Map<String, String> headers = {"Authorization":"JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6Im1vdW5pa2VzaHRob3RhIiwiZXhwIjoxNTg4OTcxMzI0LCJlbWFpbCI6Im1vdW5pa2VzaHRob3RhQGdtYWlsLmNvbSJ9.bt8mRWeCHcrffPR5u6oOJ6l_4uCrSlpJu13nO_duoaY",
 // "Content-Type":"application/json"};
           print(headers);
@@ -82,10 +83,11 @@ _showSnackBar(int stauscode) {
             "tags":tags,
             "fake": isfake,
             "anonymous":isanonymous,
- 
+            "advertisement" : _advertisement
+            
 
 });
-  print(json);
+  //print(json);
 
   // make POST request
 
@@ -383,14 +385,27 @@ _showSnackBar(int stauscode) {
                        setState(() {
                          _monteizedata = result;
                        });
+                         _advertisement = {
+                           "title" : _monteizedata.elementAt(0),
+                           "url" :  _monteizedata.elementAt(1),
+                           "advertizing_content" : _monteizedata.elementAt(2),
+
+                         };
 
                       
                     },
                     child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                   ),
                 ),
+
               ),
-              //MaterialButton(onPressed:(){print(_monteizedata);},)
+              MaterialButton(onPressed:(){
+                print(_monteizedata);
+                print(_monteizedata.elementAt(0));
+                print(_monteizedata.elementAt(1));
+                print(_monteizedata.elementAt(2));
+                print(_advertisement);
+                },)
             ],
             
           ),

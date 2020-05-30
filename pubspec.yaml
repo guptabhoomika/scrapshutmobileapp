@@ -27,6 +27,7 @@ dependencies:
   dio: 3.0.9
   mime: 0.9.6+3
   http_parser: 3.1.4
+  fluttertoast: 4.0.1
 
   flutter:
     sdk: flutter

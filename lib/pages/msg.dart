@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:http/http.dart' as http;
@@ -31,6 +32,7 @@ class _MsgState extends State<Msg> {
     bool isfake = false;
     bool isanonymous = false;
     bool isFetching = false;
+    bool ispressed= false;
   
   @override
 void initState() {
@@ -64,7 +66,7 @@ _showSnackBar(int stauscode) {
 
   String url = 'https://backend.scrapshut.com/api/msg/';
   Map<String, String> headers = {"Authorization":"JWT ${bvalue}",
-"Content-Type":"application/json"};
+"Content-Type":"application/json","API-KEY": "LrUyJbg2.hbzsN46K8ghSgF8LkhxgybbDnGqqYhKM"};
   String json = jsonEncode({
 			"rate": rating,
             "content": content,
@@ -331,17 +333,40 @@ _showSnackBar(int stauscode) {
                   //height: 200,
                   //width: 300,
                   alignment: Alignment.center,
-                  child: RaisedButton(
+                  child: ispressed ? Card(
+                    elevation: 2.0,
+                                      child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple[50]
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                        children: <Widget>[
+                          Text("We are working on it."), 
+                          Text("Keep in touch for furhter updates"),
+                        ],
+                    ),
+                      )),
+                  ) :
+                   RaisedButton(
                     elevation: 3.0,
                     color: Colors.red,
-                    onPressed: () async{
-                   final result =    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Monetize()));
-                       setState(() {
-                        _monteizedata = result;
-                       });
+                  //   onPressed: () async{
+                  //  final result =    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Monetize()));
+                  //      setState(() {
+                  //       _monteizedata = result;
+                  //      });
 
                       
-                    },
+                  //   },
+                  onPressed: (){
+           
+                      setState(() {
+                        ispressed = true;
+                      });
+              
+                  },
                     child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                   ),
                 ),
