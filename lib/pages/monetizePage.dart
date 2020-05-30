@@ -14,6 +14,28 @@ class _MonetizeState extends State<Monetize> {
     _content =  new TextEditingController();
     _title =  new TextEditingController();
     super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => new AlertDialog(
+              title: new Text("Message From WiringBridge"),
+              content: new Text("Though you can advetise anything with us  for free \n that doesnt mean you can  spam \n you need to remember that users can vote this post as genuine/spam and if the ration is less than 70% then this post as well as your advetisement will be removed automatically"),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text("I Agree"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+      );
+    });
+    // showDialog(
+    //   context: context,
+    //   builder: (_) => AlertDialog(title: Text("Dialog title")),
+    // );
+  
   }
  final List<String> _data = List<String>();
 
@@ -70,7 +92,7 @@ class _MonetizeState extends State<Monetize> {
                         textAlign: TextAlign.center,
                               decoration: InputDecoration(
                                 
-                                hintText: 'Title',
+                                hintText: 'Headline',
                                 
 
                                 hintStyle: TextStyle(color: Colors.grey,),
@@ -107,7 +129,7 @@ class _MonetizeState extends State<Monetize> {
                         textAlign: TextAlign.center,
                               decoration: InputDecoration(
                               
-                                hintText: "URL",
+                                hintText: "add URL  (Optional)",
 
                                 hintStyle: TextStyle(color: Colors.grey,),
                                 focusedBorder: OutlineInputBorder(
@@ -144,7 +166,7 @@ class _MonetizeState extends State<Monetize> {
                         textAlign: TextAlign.center,
                               decoration: InputDecoration(
                               
-                                hintText: 'Content ',
+                                hintText: 'Describe what exactly you are promoting eg:  this blog Teaches you how to get your first 1000 customer  ',
                                
 
                                 hintStyle: TextStyle(color: Colors.grey,),

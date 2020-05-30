@@ -16,6 +16,7 @@ version: 1.0.0+8
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
+
 dependencies:
   fit_image: ^0.1.2
   http: ^0.12.0
