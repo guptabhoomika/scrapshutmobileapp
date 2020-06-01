@@ -28,6 +28,7 @@ dependencies:
   mime: 0.9.6+3
   http_parser: 3.1.4
   fluttertoast: 4.0.1
+  shared_preferences: 0.5.7+3
 
   flutter:
     sdk: flutter

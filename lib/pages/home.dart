@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:http/http.dart' as http;
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sssocial/models/user.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -56,47 +58,33 @@ bool isAuth =false;
 String token ='';
 String value='';
 String gtoken='';
+check() async
+{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+print(prefs.getBool("isAuth"));
+if(prefs.getBool("isAuth")==true)
+{
+  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>InterestA()));
+}
+else
+{
+  buildUnAuthScreen();
+}
+}
+
+
 @override
 // initial state checking if user is authenticated or not 
-void initState(){
+void initState() {
+  
 super.initState();
-// googlesignin.onCurrentUserChanged.listen((account){
-// if (account != null){
-//   print("user signed in ");
-//   setState(() {
-    
+print("aa");
+check();
 
-//    isAuth=true;
-//   });
-// }
-// else{
-//   setState(() {
-    
-//     //isAuth=false;
-//   });
-// }
-// },onError:(err){
-//   print("eror signing in $err");
-// });
-// googlesignin.signInSilently(suppressErrors:false)
-// .then((account){
-//   if (account != null){
-//   print("user signed ");
-//   setState(() {
-    
-//     isAuth=true;
-//   });
-// }
-// else{
-//   setState(() {
-    
-//     //isAuth=false;
-//   });
-// }
-// });
 }
 // this function is  triggered when ever user uses google to signin
- login()  {
+ login() async  {
   googlesignin.signIn().then((result){
         result.authentication.then((googleKey) async {
           var gtoken = googleKey.accessToken;
@@ -127,6 +115,9 @@ super.initState();
       String bvalue = await storage.read(key: 'btoken');
       print(bvalue);
       print("sucess");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("isAuth", true);
+      
       
       
      
@@ -148,6 +139,8 @@ super.initState();
     } catch (e) {
       print('Failed to signOut' + e.toString());
     }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isAuth", false);
    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
 }
 
@@ -334,6 +327,7 @@ alignment: Alignment.center,
 // if isAuth value is true then it will call IntrestA which will trigger intrestaftersignin page 
 // else it will show the buildUnAuthScreen()
     return isAuth ? InterestA() : buildUnAuthScreen();
+    
   
   }
 }

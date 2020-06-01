@@ -209,7 +209,9 @@ class _InterestAState extends State<InterestA> {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
     
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: 
         ListView(
           
