@@ -253,72 +253,61 @@ check();
 // whenever isAuth=False i.e if user isnt authenticated this screen is showed to him
  Scaffold buildUnAuthScreen(){
  return Scaffold(
-body: Container(
-  decoration: BoxDecoration(
-    gradient: LinearGradient(
-      begin:Alignment.topRight,
-      end:Alignment.bottomLeft, colors: <Color>[
-        Colors.blue,
-        Colors.white,
-      ],
+    body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 250,
+                width: 250,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage("assets/images/scrap_withoutbg.png"),fit: BoxFit.cover)
+                ),
+              ),
+              SizedBox(height: 50),
+              _signInButton(),
+            ],
+          ),
         ),
-  ),
-alignment: Alignment.center,
-  child:Column(
-      mainAxisAlignment:MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-
-    children: <Widget>[
-     
-            Container(
-                height:300,
-                width: 800,
-                 decoration: new BoxDecoration(
-        image: DecorationImage(
-          image: new AssetImage(
-              'assets/images/scrap_withoutbg.png'),
-          fit: BoxFit.fill,
-        ),
-        shape: BoxShape.rectangle,
       ),
-               
-              ),
-    // Text("Scrapshut",style:TextStyle(
-    //   fontFamily:"Signatra",
-    //    fontSize:40.0,
-    //    color:Colors.lightBlue,
-    //    ),
-    //    ),
-    
-        
-        //SizedBox(height: 20,),
      
-
-       RaisedButton(   
-        //  whenever this button is  pressed then the login function which is present in home.dart will be triggered       
-         onPressed: (){
-           print('tap');
-           login();
-         },
-         child: Container(
-           width:450.0,
-           height:60.0,
-           decoration:BoxDecoration(
-             image:DecorationImage(image: AssetImage('assets/images/download.png'),
-             fit : BoxFit.cover,
-              ),
-           ),   
-         ),
-       ),
-        
-      Padding(
-          padding: const EdgeInsets.only(left: 10,top: 10),
-          child: Text("By signing up you agree with our terms and service and privacy policy",style: TextStyle(color: Colors.black,fontSize: 10),),
-        ),
-  ],),
-),
  );
 }
+Widget _signInButton() {
+    return OutlineButton(
+      splashColor: Colors.grey,
+      onPressed: () {
+        print("Tap");
+        login();
+      },
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      highlightElevation: 0,
+      borderSide: BorderSide(color: Colors.grey),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(image: AssetImage("assets/images/google_logo.png"), height: 35.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 @override
 
   Widget  build(BuildContext context){

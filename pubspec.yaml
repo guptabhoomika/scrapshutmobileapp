@@ -29,6 +29,7 @@ dependencies:
   http_parser: 3.1.4
   fluttertoast: 4.0.1
   shared_preferences: 0.5.7+3
+  google_fonts: 
 
   flutter:
     sdk: flutter
@@ -58,6 +59,7 @@ flutter:
     - assets/images/kira.png
     - assets/images/scrapshut.gif
     - assets/images/wiringbridge.png
+    - assets/images/google_logo.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
