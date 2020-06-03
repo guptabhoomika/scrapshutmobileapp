@@ -387,6 +387,7 @@ _showSnackBar(int stauscode) {
                     onPressed: () async{
                    final result =    await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Monetize()));
                        setState(() {
+                         
                          _monteizedata = result;
                        });
                          _advertisement = {
@@ -398,7 +399,7 @@ _showSnackBar(int stauscode) {
 
                       
                     },
-                    child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                    child: Text("Monetize This post",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                   ),
                 ),
 

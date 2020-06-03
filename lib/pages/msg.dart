@@ -367,7 +367,7 @@ _showSnackBar(int stauscode) {
                       });
               
                   },
-                    child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                    child: Text("Monetize this Post",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                   ),
                 ),
               ),
