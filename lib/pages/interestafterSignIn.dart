@@ -396,4 +396,12 @@ Widget content(String type)
         child: new Text("Recived Forwarded Fake message\nForward that message to us and prevent fake things being spread",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
       );
   }
+
+    else if(type == "monetizePage")
+  {
+      return Padding(
+      padding: EdgeInsets.fromLTRB(12, 220, 10, 30),
+        child: new Text("Recived Forwarded Fake message\nForward that message to us and prevent fake things being spread",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+      );
+  }
 }

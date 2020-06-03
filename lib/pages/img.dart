@@ -342,7 +342,7 @@ class _ImgState extends State<Img> {
                       ispressed = true;
                     });
                   },
-                    child: Text("Monetize this content",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                    child: Text("Monetize This post",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
                   ),
                 ),
               ),
