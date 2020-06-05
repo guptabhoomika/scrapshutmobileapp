@@ -33,6 +33,9 @@ class _State extends State<Myapp>{
     return  MaterialApp(
       title:'Scrapshut',
       debugShowCheckedModeBanner: false,
+     theme: ThemeData(
+       primaryColor: Colors.blue
+     ),
       home: Home(),
       
  

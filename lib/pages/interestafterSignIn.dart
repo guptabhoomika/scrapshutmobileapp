@@ -39,6 +39,7 @@ class _InterestAState extends State<InterestA> {
     _makeGetRequest();
     super.initState();
   }
+  String name;
   _makeGetRequest() async {
     String bvalue = await storage.read(key: 'btoken');
   // make GET request
@@ -63,7 +64,9 @@ class _InterestAState extends State<InterestA> {
     
     _tags = results[0]["tags"];
   });
+ name = results[0]['username'];
  
+ print(name);
   if(_tags.isEmpty)
   {
     print("empty,post req");
@@ -326,7 +329,7 @@ class _InterestAState extends State<InterestA> {
                 child: GestureDetector(
                   onTap: (){
                     //Home().buildAuth(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Main()));
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Main(name: name,)));
                         Navigator.of(context).push(PageRouteBuilder(
     opaque: false,
     pageBuilder: (BuildContext context, _, __) =>

@@ -23,6 +23,7 @@ import 'package:sssocial/pages/img.dart';
 import 'package:sssocial/pages/interest.dart';
 import 'package:sssocial/pages/interestAfterSignIn.dart';
 import 'package:sssocial/pages/url.dart';
+import 'package:sssocial/screens/scree.dart';
 
 
 import 'msg.dart';
@@ -57,29 +58,58 @@ class _HomeState extends State<Home>{
 bool isAuth =false;
 String token ='';
 String value='';
+bool g = false;
 String gtoken='';
+isfirsttime() async
+{
+  print("method called");
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+     if(prefs.getBool('first_time') == false)
+{
+  print(prefs.getString("name"));
+  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>Main(name: prefs.getString("name"))));
+}
+else
+{
+  print('in else');
+  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>InterestA()));
+}
+}
 check() async
 {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-print(prefs.getBool("isAuth"));
+print("isauth    "+prefs.getBool("isAuth").toString());
+print("firsttime  " + prefs.getBool('first_time').toString());
 if(prefs.getBool("isAuth")==true)
 {
-  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>InterestA()));
+    isfirsttime();
+
 }
-else
+
+else 
 {
-  buildUnAuthScreen();
+  print("in else");
+   
+ buildUnAuthScreen();
+  print("unauth");
+  setState(() {
+    g = true;
+  });
+  
+ 
+ 
+ 
 }
 }
 
-
+String name;
 @override
 // initial state checking if user is authenticated or not 
 void initState() {
   
 super.initState();
-print("aa");
+
 check();
 
 }
@@ -111,13 +141,19 @@ check();
       print(responseBody);
      Map<String, dynamic> responseJson = jsonDecode(response.body);
      String btoken=responseJson['access_token'];
+     name = responseJson['username'];
       await storage.write(key: 'btoken', value: btoken);
       String bvalue = await storage.read(key: 'btoken');
       print(bvalue);
       print("sucess");
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool("isAuth", true);
       
+      setbool();
+print("value of g " + g.toString());
+if(g)
+{
+  isfirsttime();
+}
+
       
       
      
@@ -130,6 +166,7 @@ check();
           });
   });
 }
+
 // this function is troggered whenever user clicks logout from scree.dart in screens 
  Future logout() async {
     try {
@@ -141,115 +178,30 @@ check();
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("isAuth", false);
+    
+      
+    g = false;
+   
+  print(g.toString() + " g");
    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
 }
 
-
-//   Scaffold buildAuthScreen(context){
-// return      Scaffold(
-
-//   body: Container(
-//     height: MediaQuery.of(context).size.height,
-//     width: double.infinity,
-//     child: DefaultTabController(
-//       child: Scaffold(
-//          appBar: AppBar(
-//                   elevation: 0.0,
-//                   backgroundColor: Colors.blue[100],
-//                   bottom: PreferredSize(
-//                     preferredSize: Size.fromHeight(25),
-//                     child: Container(
-//                       color: Colors.transparent,
-//                       child: SafeArea(
-//                         child: Column(
-//                           children: <Widget>[
-//                             TabBar(
-//                                 indicator: UnderlineTabIndicator(
-//                                     borderSide: BorderSide(
-//                                         color: Colors.red
-//                                         , width: 6.0),
-//                                     insets: EdgeInsets.fromLTRB(
-//                                         40.0, 20.0, 40.0, 0)),
-//                                 indicatorWeight: 15,
-//                                 indicatorSize: TabBarIndicatorSize.label,
-//                                 labelColor: Colors.white,
-//                                 labelStyle: TextStyle(
-//                                     fontSize: 12,
-                                   
-//                                     fontWeight: FontWeight.bold),
-//                                 unselectedLabelColor: Colors.white,
-//                                 tabs: [
-//                                   Tab(
-//                                     text: "URL",
-                                    
-//                                   ),
-//                                   Tab(
-//                                     text: "MESSAGE",
-                                   
-//                                   ),
-//                                   Tab(
-//                                     text: "IMAGE",
-                                  
-//                                   ),
-//                                 ])
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-                  
-//                 ),
-//                 drawer: Drawer(
-//                  child: ListView(
-//     // Important: Remove any padding from the ListView.
-//     padding: EdgeInsets.zero,
-//     children: <Widget>[
-//       DrawerHeader(
-//         child: Text('Scrashut For Deeptech'),
-//         decoration: BoxDecoration(
-//           color: Colors.blue,
-//         ),
-//       ),
-//       ListTile(
-//         title: Text('Logout'),
-//         onTap: () {
-//           logout();
-//           // Update the state of the app.
-//           // ...
-//         },
-//       ),
-//       ListTile(
-//         title: Text('Interests'),
-//         onTap: () {
-//            Navigator.push(
-//     context,
-//     MaterialPageRoute(builder: (context) => Interest()),
-//   );
-//         },
-//       ),
-//     ],
-//   ),
-//                 ),
-//                   body: TabBarView(
-//                   children: <Widget>[
-//                     URL(),
-//                     Msg(),  
-//                     Img(),
-                    
-//                   ],
-//                 )
-//                 ), 
-//                 length: 3,
-//                 )
-//                 )
-                
-//       );
+setbool() async
+{
+  print("set bool called");
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString("name", name);
+      prefs.setBool("isAuth", true);
+      
+      print(prefs.getBool("first_time").toString() + " before if");
+        if(prefs.getBool("first_time")==null){
+            prefs.setBool('first_time',false);
+        }
       
       
-  
-  
+      //initState();
+}
 
-// }
 // whenever isAuth=False i.e if user isnt authenticated this screen is showed to him
  Scaffold buildUnAuthScreen(){
  return Scaffold(
@@ -308,15 +260,16 @@ Widget _signInButton() {
       ),
     );
   }
+
 @override
 
   Widget  build(BuildContext context){
-    print("is auth in build");
-    print(isAuth);
+    
 // if isAuth value is true then it will call IntrestA which will trigger intrestaftersignin page 
 // else it will show the buildUnAuthScreen()
-    return isAuth ? InterestA() : buildUnAuthScreen();
+    return isAuth  ? InterestA() : buildUnAuthScreen();
     
   
   }
+  
 }
