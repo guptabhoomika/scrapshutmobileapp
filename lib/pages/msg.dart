@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:sssocial/services.dart';
 
 
 import '../widgets/loader.dart';
@@ -94,36 +95,10 @@ _showSnackBar(int stauscode) {
      _showSnackBar(statusCode);
 
    }
-   else if(statusCode == 401)
-   {
-     final snackBar = new SnackBar(
-        content: Text("Unauthorized access"),
-        duration: new Duration(seconds: 3),
-        backgroundColor: Colors.black,
-        action: new SnackBarAction(label: "LogOut",textColor: Colors.white, onPressed: (){
-          Home().method();
-              
-        }),
-    );
-    //How to display Snackbar ?
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-
-   }
-     else if(statusCode == 500)
-   {
-     final snackBar = new SnackBar(
-        content: Text("Server error please contact team@scrapshut.com"),
-        duration: new Duration(seconds: 3),
-        backgroundColor: Colors.black,
-        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
-          _review.clear();_tags.clear(); _message.clear() ;ratings=0;
-              
-        }),
-    );
-    //How to display Snackbar ?
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-
-   }
+  else
+  {
+    Services.sendmail(response.body);
+  }
   }
   // Widget build(BuildContext context) {
     Widget build(BuildContext context) {

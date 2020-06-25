@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sssocial/errorapi.dart';
+import 'package:sssocial/services.dart';
  
 import  '../pages/home.dart';
 import '../widgets/loader.dart';
@@ -18,6 +20,9 @@ class URL extends StatefulWidget {
 final storage = new FlutterSecureStorage();
 
 class _URLState extends State<URL> {
+ 
+   final String email = "ayushagr2000@gmail.com";
+   final String email2 = "guptabhoomika2000@gmail.com";
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController _url;
   TextEditingController _review;
@@ -107,7 +112,8 @@ _showSnackBar(int stauscode) {
 
    }
    else {
-     ErrorApi().error(statusCode);
+     print("Status code");
+     Services.sendmail(response.body);
    }
   //  else if(statusCode == 401)
   //  {
@@ -404,13 +410,7 @@ _showSnackBar(int stauscode) {
                 ),
 
               ),
-              MaterialButton(onPressed:(){
-                print(_monteizedata);
-                print(_monteizedata.elementAt(0));
-                print(_monteizedata.elementAt(1));
-                print(_monteizedata.elementAt(2));
-                print(_advertisement);
-                },)
+              
             ],
             
           ),
@@ -418,4 +418,5 @@ _showSnackBar(int stauscode) {
       
     );
   }
+
 }

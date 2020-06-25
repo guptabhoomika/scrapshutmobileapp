@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:sssocial/services.dart';
 
 
 import '../widgets/loader.dart';
@@ -246,56 +247,10 @@ class _ImgState extends State<Img> {
 
                   }
                   // if there is status code of 401 then logout will be triggered
-                else if(response.statusCode == 401)
-   {
-     final snackBar = new SnackBar(
-        content: Text("Unauthorized access"),
-        duration: new Duration(seconds: 3),
-        backgroundColor: Colors.black,
-        action: new SnackBarAction(label: "LogOut",textColor: Colors.white, onPressed: (){
-          Home().method();
-              
-        }),
-    );
-    //How to display Snackbar ?
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-
-   }
-     else if(response.statusCode == 500)
-   {
-     final snackBar = new SnackBar(
-        content: Text("Server error please contact team@scrapshut.com"),
-        duration: new Duration(seconds: 3),
-        backgroundColor: Colors.black,
-        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
-         
-              
-        }),
-    );
-    //How to display Snackbar ?
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-
-   }
-  else if(response.statusCode == 400)
-   {
-    
-   
-     final snackBar = new SnackBar(
-        content: Text(response.statusMessage),
-        duration: new Duration(seconds: 3),
-        backgroundColor: Colors.black,
-        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
-              
-        }),
-    );
-    //How to display Snackbar ?
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-
-   }
-    
-  
-
-            
+                  else
+                  {
+                    Services.sendmail(response.data);
+                  }
                   
                 } catch (e) {
                   print(e);

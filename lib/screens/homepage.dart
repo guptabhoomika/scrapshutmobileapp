@@ -64,68 +64,69 @@ class _HomePageState extends State<HomePage>  with SingleTickerProviderStateMixi
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-       body: SafeArea(
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                      
+    return SingleChildScrollView(
+          child: SafeArea(
+        
+               child: Column(
+                        
 
-                                          children: <Widget>[
+             children: <Widget>[
+                                              
                                             
+                                              
                                           
-                                            
-                                        
-              
-         Padding(
-           padding: const EdgeInsets.only(top:10),
-          
-             child: new TabBar(
-
-                  controller: _tabController,
-                  tabs: _listTab,
-                 unselectedLabelColor: Colors.blue,
-                  labelColor: Colors.blue,
-                  indicatorColor: Colors.blue,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  
-                ),
-          
-         ),
+                
+           Padding(
+             padding: const EdgeInsets.only(top:10),
             
-    Container(
-      height: MediaQuery.of(context).size.height,
-      child: TabBarView
+               child: new TabBar(
+
+                    controller: _tabController,
+                    tabs: _listTab,
+                   unselectedLabelColor: Colors.blue,
+                    labelColor: Colors.blue,
+                    indicatorColor: Colors.blue,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    
+                  ),
+            
+           ),
+              
+      Container(
+        height: MediaQuery.of(context).size.height,
+        child: TabBarView
   
-                            (
+                              (
   
-                              
+                                
   
-                              controller: _tabController,
+                                controller: _tabController,
   
-                            children: <Widget>[
+                              children: <Widget>[
   
-                              URL(),
+                                URL(),
   
-                              Msg(),  
+                                Msg(),  
   
-                              Img(),
+                                Img(),
   
-                              
+                                
   
-                            ],
+                              ],
   
-                                           ),
-    ),
-                                         //SideBar()
+                                             ),
+      ),
+                                           //SideBar()
 ],
+                        ),
                       ),
-                    ),
-                  )
+                    
+    );
                 
                
                 
 
       
-    );
+    
   }
 }
