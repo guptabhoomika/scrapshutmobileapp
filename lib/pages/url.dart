@@ -99,10 +99,11 @@ _showSnackBar(int stauscode) {
 
   Response response = await post(url,headers: headers, body: json);
   print(response.body);
+  var resp = jsonDecode(response.body);
   setState(() {
     isFetching = false;
   });
-  print(response.statusCode);
+ 
    int statusCode = response.statusCode;
    if(statusCode == 201)
    {
@@ -113,21 +114,53 @@ _showSnackBar(int stauscode) {
    }
    else {
      print("Status code");
-     Services.sendmail(response.body);
+     //Services.sendmail(response.body);
+     print(statusCode);
+     print(response.body);
+     if(statusCode==400)
+     {
+       String msg = "";
+       if(resp.toString().contains("url"))
+       {
+         msg = resp["url"].toString().replaceAll("[", " ").replaceAll("]", " ");
+          final snackBar = new SnackBar(
+        content: Text(msg),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){}),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+       }
+       else if(resp.toString().contains("details"))
+       {
+         msg = resp["details"].toString();
+          final snackBar = new SnackBar(
+        content: Text(msg),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+        action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){}),
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+       }
+       else
+       {
+         Services.sendmail(response.body);
+       }
+         
+  
+       
+
+     }else
+     {
+       Services.sendmail(response.body);
+     }
+   
    }
   //  else if(statusCode == 401)
   //  {
-  //    final snackBar = new SnackBar(
-  //       content: Text("Unauthorized access"),
-  //       duration: new Duration(seconds: 3),
-  //       backgroundColor: Colors.black,
-  //       action: new SnackBarAction(label: "LogOut",textColor: Colors.white, onPressed: (){
-              
-  //             Home().method();
-  //       }),
-  //   );
-  //   //How to display Snackbar ?
-  //   _scaffoldKey.currentState.showSnackBar(snackBar);
+  
 
   //  }
   //    else if(statusCode == 500)
