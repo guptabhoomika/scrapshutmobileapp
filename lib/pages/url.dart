@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sssocial/errorapi.dart';
 import 'package:sssocial/services.dart';
+import 'package:url_launcher/url_launcher.dart';
  
 import  '../pages/home.dart';
 import '../widgets/loader.dart';
@@ -45,6 +46,7 @@ class _URLState extends State<URL> {
     _review = TextEditingController();
     _tags = TextEditingController();
    
+   getdetails();
 
   
     // TODO: implement initState
@@ -158,50 +160,40 @@ _showSnackBar(int stauscode) {
      }
    
    }
-  //  else if(statusCode == 401)
-  //  {
   
-
-  //  }
-  //    else if(statusCode == 500)
-  //  {
-  //    final snackBar = new SnackBar(
-  //       content: Text("Server error please contact team@scrapshut.com"),
-  //       duration: new Duration(seconds: 3),
-  //       backgroundColor: Colors.black,
-  //       action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
-  //         _review.clear();_tags.clear();_url.clear();ratings=0;
-              
-  //       }),
-  //   );
-  //   //How to display Snackbar ?
-  //   _scaffoldKey.currentState.showSnackBar(snackBar);
-
-  //  }
-  // else if(statusCode == 400)
-  //  {
-  //    Map<String,dynamic> err = jsonDecode(response.body);
-  //    print(err);
-    
-   
-  //    final snackBar = new SnackBar(
-  //       content: Text(response.body.substring(response.body.indexOf(":")+2,response.body.length-2)),
-  //       duration: new Duration(seconds: 3),
-  //       backgroundColor: Colors.black,
-  //       action: new SnackBarAction(label: "Ok",textColor: Colors.white, onPressed: (){
-  //         _review.clear();_tags.clear();_url.clear();ratings=0;
-              
-  //       }),
-  //   );
-  //   //How to display Snackbar ?
-  //   _scaffoldKey.currentState.showSnackBar(snackBar);
-
-  //  }
     
   }
+  double avg;
+getdetails() async
+{
+  String u = "http://blog.scrapshut.com";
+   Map<String, String> headers = {
+"Content-Type":"application/json","API-KEY": "LrUyJbg2.hbzsN46K8ghSgF8LkhxgybbDnGqqYhKM"};
 
+  Response _response = await http.get("https://backend.scrapshut.com/api/post?search=$u",headers: headers);
+  //print(_response.body);
+  Map<String,dynamic> map = jsonDecode(_response.body);
+  //print(map);
+  List<dynamic> _list = map['results'];
+  double sum =0;
+  for(int i=0;i<_list.length;i++)
+  {
+    sum= sum + _list[i]["rate"];
+   
+  }
+  // avg = (avg/_list.length) as int;
+  // print(avg);
+  int n = _list.length;
+  
+  setState(() {
+    avg = sum/n;
+  });
+  print(avg);
+
+}
   @override
   Widget build(BuildContext context) {
+    BuildContext dialog;
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
@@ -282,6 +274,11 @@ _showSnackBar(int stauscode) {
      color: Colors.amber,
    ),
    onRatingUpdate: ( rating) {
+     if(rating<=1)
+     {
+       showAlertDialog(context,avg);
+
+     }
     ratings = rating.toInt();
    },
 ),
@@ -451,5 +448,42 @@ _showSnackBar(int stauscode) {
       
     );
   }
+}
 
+ showAlertDialog(BuildContext context,double avg) {  
+  // Create button  
+  Widget okButton = FlatButton(  
+    child: Text("OK"),  
+    onPressed: () {  
+      Navigator.of(context).pop();  
+    },  
+  );  
+  
+  // Create AlertDialog  
+  AlertDialog alert = AlertDialog( 
+
+    title: avg!=0 ? Text("This post has a rating of $avg") : Text("This url is not rated yet"),  
+    content: avg!=0 ? GestureDetector(
+      onTap: (){
+        _launchURL();
+      },
+      child: Text("See the ratings and review at https://wiringbridge.com/",style: TextStyle(color: Colors.blue),)) : Text(""),  
+    
+  );  
+  
+  // show the dialog  
+  showDialog(  
+    context: context,  
+    builder: (BuildContext context) {  
+      return alert;  
+    },  
+  );  
+}  
+_launchURL() async {
+  const url = 'https://wiringbridge.com/';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
 }
