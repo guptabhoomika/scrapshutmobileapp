@@ -118,7 +118,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                          child: ListTile(
                            
                            title:  Text(
-                          "ScrapCoins",
+                          "ScrapStats",
                           style:  TextStyle(fontWeight: FontWeight.w300, fontSize: 15, color: Colors.white),
                         ), 
                           

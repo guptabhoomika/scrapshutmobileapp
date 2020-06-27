@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:regexed_validator/regexed_validator.dart';
 import 'package:sssocial/errorapi.dart';
 import 'package:sssocial/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,8 +23,7 @@ final storage = new FlutterSecureStorage();
 
 class _URLState extends State<URL> {
  
-   final String email = "ayushagr2000@gmail.com";
-   final String email2 = "guptabhoomika2000@gmail.com";
+  
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController _url;
   TextEditingController _review;
@@ -46,13 +46,23 @@ class _URLState extends State<URL> {
     _review = TextEditingController();
     _tags = TextEditingController();
    
-   getdetails();
+  
 
   
     // TODO: implement initState
     super.initState();
   }
-  
+  showSnackBarURL() {
+    print("Show Snackbar here !");
+    final snackBar = new SnackBar(
+        content: Text("Ebter a valid url"),
+        duration: new Duration(seconds: 3),
+        backgroundColor: Colors.black,
+       
+    );
+    //How to display Snackbar ?
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
   
 
 _showSnackBar(int stauscode) {
@@ -164,19 +174,27 @@ _showSnackBar(int stauscode) {
     
   }
   double avg;
-getdetails() async
+getdetails(String url) async
 {
-  String u = "http://blog.scrapshut.com";
+  
    Map<String, String> headers = {
 "Content-Type":"application/json","API-KEY": "LrUyJbg2.hbzsN46K8ghSgF8LkhxgybbDnGqqYhKM"};
 
-  Response _response = await http.get("https://backend.scrapshut.com/api/post?search=$u",headers: headers);
+  Response _response = await http.get("https://backend.scrapshut.com/api/post?search=$url",headers: headers);
   //print(_response.body);
   Map<String,dynamic> map = jsonDecode(_response.body);
   //print(map);
   List<dynamic> _list = map['results'];
   double sum =0;
-  for(int i=0;i<_list.length;i++)
+  if(_list.length==0)
+  {
+    setState(() {
+      avg =0;
+    });
+  }
+  else
+  {
+      for(int i=0;i<_list.length;i++)
   {
     sum= sum + _list[i]["rate"];
    
@@ -190,10 +208,13 @@ getdetails() async
   });
   print(avg);
 
+  }
+
+
 }
   @override
   Widget build(BuildContext context) {
-    BuildContext dialog;
+    
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
@@ -231,6 +252,7 @@ getdetails() async
                       child: TextFormField(
                         keyboardType: TextInputType.url,
                         controller: _url,
+                        
                         textAlign: TextAlign.center,
                               decoration: InputDecoration(
                             
@@ -273,10 +295,27 @@ getdetails() async
      Icons.star,
      color: Colors.amber,
    ),
-   onRatingUpdate: ( rating) {
+   onRatingUpdate: ( rating) async {
      if(rating<=1)
      {
-       showAlertDialog(context,avg);
+      if(validator.url(_url.text))
+      {
+        await  getdetails(_url.text);
+        
+         if(avg!=null)
+         {
+            showAlertDialog(context, avg);
+           print(avg.toString() + "in rating");
+           
+         }
+
+      }
+     else
+      {
+       showSnackBarURL();
+       rating = 0;
+      }
+      
 
      }
     ratings = rating.toInt();
@@ -451,24 +490,21 @@ getdetails() async
 }
 
  showAlertDialog(BuildContext context,double avg) {  
-  // Create button  
-  Widget okButton = FlatButton(  
-    child: Text("OK"),  
-    onPressed: () {  
-      Navigator.of(context).pop();  
-    },  
-  );  
+   
+   
   
   // Create AlertDialog  
   AlertDialog alert = AlertDialog( 
 
-    title: avg!=0 ? Text("This post has a rating of $avg") : Text("This url is not rated yet"),  
+    title: avg!=0 ? Center(child: Text("This post has a rating of $avg")) : Text("This url is not rated yet"),  
     content: avg!=0 ? GestureDetector(
       onTap: (){
         _launchURL();
       },
       child: Text("See the ratings and review at https://wiringbridge.com/",style: TextStyle(color: Colors.blue),)) : Text(""),  
-    
+    actions: [
+      Text("               Tap anywhere to continue",style: TextStyle(color:Colors.grey),)
+    ],
   );  
   
   // show the dialog  

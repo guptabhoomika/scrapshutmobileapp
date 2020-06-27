@@ -51,7 +51,7 @@ class _ScrapCoinState extends State<ScrapCoin> {
             Container(
                   
             child: Text(
-                "Reinvent the wheel of advertisements like never before  \n  you can  be an brand influencer and advertise anything for free \n on Wiringbridge APP \n Based on ScrapCoins ",
+                "Based on your reviews users can report your review as genuine/spam  \n Scrapstats is genuine/spam ratio ",
           textAlign: TextAlign.center,
     
         ),
