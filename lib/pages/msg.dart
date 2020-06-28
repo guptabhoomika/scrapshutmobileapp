@@ -73,7 +73,7 @@ _showSnackBar(int stauscode) {
             "content": content,
             "review": review,
             // "url": urlC,
-            // "tags":tags
+            "tags":tags,
             "fake": isfake,
             "anonymous": isanonymous,
 });
@@ -88,6 +88,7 @@ _showSnackBar(int stauscode) {
   });
    int statusCode = response.statusCode;
    print(statusCode);
+
     if(statusCode == 201)
    {
        print("statusCode");
